@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইউটিউব অডিওবুক চ্যানেল - E-Book Universe</title>
+    <style>
+        /* General Body & Font Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px; /* Wider container for the book grid */
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        main {
+            flex-grow: 1; /* Ensures footer sticks to bottom */
+        }
+
+        /* Header & Dropdown Navbar */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1D5B79;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1D5B79;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1D5B79;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropbtn {
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* Campaign Banner */
+        .campaign-banner {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(40, 93, 184, 0.3);
+        }
+        
+        .campaign-banner h2 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .campaign-banner p {
+            margin: 0 0 20px 0;
+            font-size: 1.2em;
+        }
+        
+        .campaign-banner .btn-campaign {
+            background-color: #FFD700;
+            color: #192a3d;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .campaign-banner .btn-campaign:hover {
+            background-color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Main Content Header */
+        .main-header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .main-header h1 {
+            font-size: 2.8em;
+            color: #192a3d;
+            margin: 0;
+        }
+        
+        .main-header p {
+            font-size: 1.2em;
+            color: #6c757d;
+        }
+
+        /* Channel Grid */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        /* Channel Card */
+        .book-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 140px; /* 16:9 aspect ratio */
+            object-fit: cover;
+            display: block;
+            background-color: #eee;
+        }
+
+        .book-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: #343a40;
+        }
+
+        .book-info p {
+            margin: 0 0 15px 0;
+            font-size: 0.9em;
+            color: #6c757d;
+            flex-grow: 1;
+        }
+        
+        .book-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            flex-grow: 1;
+            border: none;
+            font-size: 0.9em;
+        }
+        
+        .btn-details {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-download {
+            background-color: #c4302b; /* YouTube Red */
+            color: white;
+        }
+         .btn-download:hover {
+            background-color: #a02823;
+        }
+        
+        /* Modal (Popup) Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1001; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s;
+        }
+
+        /* --- Glassmorphism Style --- */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* For Safari */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #222; /* Darker text for readability */
+            
+            margin: 10% auto;
+            padding: 30px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            animation: slideIn 0.4s;
+        }
+
+        .close-btn {
+            color: #333; /* Darker close button */
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-btn:hover {
+            color: black;
+        }
+
+        /* Modal Specific Styles */
+        #loginModal h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #111;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background: rgba(255,255,255,0.8);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            font-size: 1.1em;
+        }
+        
+        #detailsModalContent {
+            display: flex;
+            gap: 20px;
+        }
+        
+        #modal-book-cover {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px; /* More rounded for channel icon */
+            flex-shrink: 0;
+        }
+        
+        #modal-book-details h2 {
+            margin: 0 0 10px;
+            color: #111;
+        }
+        
+        #modal-book-details p {
+            line-height: 1.7;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideIn {
+            from {transform: translateY(-50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #192a3d;
+            color: #f4f7f9;
+            margin-top: 40px;
+        }
+        
+        footer p {
+            margin: 0;
+            color: #abb8c3;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Hide full nav on mobile */
+            }
+            .navbar {
+                justify-content: center; /* Center logo if nav is hidden */
+            }
+            .campaign-banner h2 {
+                font-size: 2em;
+            }
+            #detailsModalContent {
+                flex-direction: column;
+                align-items: center;
+            }
+            #modal-book-cover {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">E-Book Universe</a>
+            <ul class="nav-links">
+                <li><a href="#">হোম</a></li>
+                <!-- Dropdown Menu Item -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">ক্যাটাগরি</a>
+                    <div class="dropdown-content">
+                        <a href="#">বইয়ের তালিকা</a>
+                        <a href="#">ইউটিউব অডিওবুক</a>
+                        <a href="#">জীবনধারা</a>
+                    </div>
+                </li>
+                <li><a href="#">আমাদের সম্পর্কে</a></li>
+                <li><a href="#">যোগাযোগ</a></li>
+                <li><a href="#">লগ ইন</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Campaign Banner -->
+    <div class="campaign-banner">
+        <h2>সেরা অডিওবুক কালেকশন</h2>
+        <p>বাংলা সাহিত্যের সেরা সব অডিওবুক এখন এক জায়গায়।</p>
+        <a href="#" class="btn-campaign">এখনই ব্রাউজ করুন</a>
+    </div>
+
+    <!-- Main Content: Channel Library -->
+    <main class="container">
+        <div class="main-header">
+            <h1>ইউটিউব অডিওবুক চ্যানেল</h1>
+            <p>আপনার শোনার জন্য সেরা ১০০টি বাংলা অডিওবুক চ্যানেল।</p>
+        </div>
+        
+        <div id="bookGrid" class="book-grid">
+            <!-- Channel cards will be dynamically inserted here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeLogin">&times;</span>
+            <h2>লগইন আবশ্যক</h2>
+            <p>চ্যানেল ভিজিট করার জন্য অনুগ্রহ করে লগইন করুন।</p>
+            <form>
+                <div class="form-group">
+                    <label for="username">ইউজারনেম অথবা ইমেইল</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">পাসওয়ার্ড</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-submit">লগইন</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Details Modal (Glass Style) -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeDetails">&times;</span>
+            <div id="detailsModalContent">
+                <img id="modal-book-cover" src="" alt="চ্যানেল থাম্বনেইল">
+                <div id="modal-book-details">
+                    <h2 id="modal-book-title"></h2>
+                    <p id="modal-book-description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>Copyright © 2025 E-Book Universe. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookGrid = document.getElementById('bookGrid');
+            const loginModal = document.getElementById('loginModal');
+            const detailsModal = document.getElementById('detailsModal');
+            const closeLoginBtn = document.getElementById('closeLogin');
+            const closeDetailsBtn = document.getElementById('closeDetails');
+
+            // List of 15 unique Bangla YouTube channel templates
+            const channelTemplates = [
+                {
+                    channelName: 'গল্পের ভান্ডার',
+                    desc: 'ভৌতিক, রহস্য, ও রোমাঞ্চকর গল্পের অডিওবুক।',
+                    full: 'গল্পের ভান্ডার চ্যানেলে আপনাকে স্বাগতম। এখানে আপনি পাবেন সেরা সব ভৌতিক, রহস্যময় এবং রোমাঞ্চকর গল্পের অডিওবুক। আমাদের প্রতিটি গল্প আপনার মনে ভয় ও উত্তেজনা সৃষ্টি করবে।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'ক্লাসিক বাংলা সাহিত্য',
+                    desc: 'রবীন্দ্রনাথ, শরৎচন্দ্র, বঙ্কিমচন্দ্রের সেরা সব উপন্যাস।',
+                    full: 'বাংলা সাহিত্যের স্বর্ণযুগের লেখকদের কালজয়ী সব লেখা শুনতে আমাদের চ্যানেল সাবস্ক্রাইব করুন। এখানে রবীন্দ্রনাথ, শরৎচন্দ্র, বঙ্কিমচন্দ্র এবং আরও অনেক কিংবদন্তির লেখা পাঠ করা হয়।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'অনুপ্রেরণার আলো',
+                    desc: 'জীবন বদলে দেওয়া মোটিভেশনাল অডিওবুক।',
+                    full: 'প্রতিদিন নতুন করে বাঁচার প্রেরণা পেতে আমাদের "অনুপ্রেরণার আলো" চ্যানেলের সাথেই থাকুন। এখানে বিশ্বের সেরা সব সেলফ-হেল্প ও মোটিভেশনাল বইয়ের বাংলা অডিওবুক পাবেন।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'রহস্য রোমাঞ্চ',
+                    desc: 'থ্রিলার ও ডিটেকটিভ গল্পের সেরা সংগ্রহ।',
+                    full: 'আপনি কি ফেলুদা, ব্যোমকেশ বা শার্লক হোমসের ভক্ত? তাহলে এই চ্যানেলটি আপনার জন্য। সেরা সব ডিটেকটিভ ও থ্রিলার গল্পের অডিওবুক নিয়ে আমাদের এই আয়োজন।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'ইসলামিক অডিওবুক',
+                    desc: 'ইসলামিক ইতিহাস, জীবনধারা ও অনুপ্রেরণামূলক কাহিনী।',
+                    full: 'ইসলামিক জ্ঞান অর্জনের জন্য আমাদের এই প্রচেষ্টা। এখানে ইসলামিক মনীষীদের জীবনী, ঐতিহাসিক ঘটনা এবং জীবন-ঘনিষ্ঠ বিভিন্ন বিষয়ের উপর অডিওবুক তৈরি করা হয়।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'ছোটদের গল্পঘর',
+                    desc: 'শিশু-কিশোরদের জন্য মজাদার ও শিক্ষণীয় গল্প।',
+                    full: 'আপনার সন্তানের জন্য সেরা সব শিক্ষণীয় ও মজাদার গল্পের সম্ভার নিয়ে আমাদের "ছোটদের গল্পঘর"। এখানে ঈশপের গল্প, রূপকথা, এবং শিক্ষামূলক সব কাহিনীর অডিও রয়েছে।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'কবিতা আবৃত্তি',
+                    desc: 'জনপ্রিয় সব বাংলা কবিতার অডিও।',
+                    full: 'কবিতা ভালোবাসেন? আমাদের চ্যানেলে আপনি পাবেন জীবনানন্দ দাশ, কাজী নজরুল ইসলাম, নির্মলেন্দু গুণ সহ বিখ্যাত সব কবির কবিতা আবৃত্তি।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'সায়েন্স ফিকশন জোন',
+                    desc: 'কল্পবিজ্ঞানের জগতে আপনাকে স্বাগতম।',
+                    full: 'আইজ্যাক আসিমভ, আর্থার সি. ক্লার্ক থেকে শুরু করে মুহম্মদ জাফর ইকবালের সেরা সব সায়েন্স ফিকশন গল্পের বাংলা অডিওবুক এখানে পাবেন।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'জীবনী ও ইতিহাস',
+                    desc: 'বিখ্যাত ব্যক্তিদের জীবনী এবং ঐতিহাসিক ঘটনা।',
+                    full: 'ইতিহাসের পাতা থেকে উঠে আসা সব ঘটনা এবং বিশ্বের বিখ্যাত সব ব্যক্তিদের জীবনী জানতে আমাদের চ্যানেলের সাথেই থাকুন।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'বুক রিভিউ বিডি',
+                    desc: 'জনপ্রিয় সব বইয়ের সংক্ষিপ্ত সার ও রিভিউ।',
+                    full: 'কোন বইটি পড়বেন ভাবছেন? আমাদের চ্যানেলে আমরা জনপ্রিয় সব দেশি-বিদেশি বইয়ের বিস্তারিত রিভিউ এবং সারসংক্ষেপ তুলে ধরি, যা আপনাকে সঠিক বইটি বেছে নিতে সাহায্য করবে।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'আধুনিক সাহিত্য',
+                    desc: 'সমসাময়িক লেখকদের জনপ্রিয় সব বই।',
+                    full: 'হুমায়ূন আহমেদ, আনিসুল হক, ইমদাদুল হক মিলন সহ আধুনিক বাংলা সাহিত্যের জনপ্রিয় লেখকদের বইয়ের অডিওবুক এখানে নিয়মিত আপলোড করা হয়।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'ভ্রমণ কাহিনী',
+                    desc: 'দেশ-বিদেশের রোমাঞ্চকর সব ভ্রমণের গল্প।',
+                    full: 'ঘরে বসেই বিশ্ব ভ্রমণের অভিজ্ঞতা নিতে আমাদের এই চ্যানেল। বিখ্যাত সব ভ্রমণকারীদের লেখা বই ও তাদের অভিজ্ঞতার অডিও এখানে শুনতে পাবেন।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'বিশ্ব সাহিত্য',
+                    desc: 'বিশ্বের বিভিন্ন ভাষার সেরা সাহিত্যের বাংলা অনুবাদ।',
+                    full: 'লিও টলস্টয়, দস্তয়েভস্কি, হেমিংওয়ে - বিশ্বের সেরা সব সাহিত্যিকের লেখার বাংলা অনুবাদ অডিওবুক আকারে এখানে পাবেন।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'ব্যবসায়িক অডিওবুক',
+                    desc: 'ব্যবসা, ফিন্যান্স ও মার্কেটিং বিষয়ক বই।',
+                    full: 'ব্যবসা ও উদ্যোক্তাদের জন্য একটি বিশেষ চ্যানেল। এখানে মার্কেটিং, ফিন্যান্স, লিডারশিপ এবং ব্যবসা সংক্রান্ত সেরা বইগুলোর বাংলা অডিওবুক পাওয়া যায়।',
+                    youtubeLink: 'https://www.youtube.com'
+                },
+                {
+                    channelName: 'আত্ম-উন্নয়ন',
+                    desc: 'ব্যক্তিগত দক্ষতা ও মানসিক স্বাস্থ্যের উন্নতি।',
+                    full: 'নিজের সেরা সংস্করণ হয়ে উঠতে আমাদের এই প্রচেষ্টা। এখানে ব্যক্তিগত দক্ষতা, মানসিক স্বাস্থ্য এবং আত্ম-উন্নয়নমূলক বিভিন্ন বইয়ের অডিও শুনতে পাবেন।',
+                    youtubeLink: 'https://www.youtube.com'
+                }
+            ];
+
+            const channels = [];
+            // Generate 100 channels by looping through the 15 templates
+            for (let i = 1; i <= 100; i++) {
+                const template = channelTemplates[(i - 1) % 15]; // Cycle through the templates
+                const channelName = `${template.channelName} ${i}`; // Add a unique number
+                
+                channels.push({
+                    id: i,
+                    channelName: channelName,
+                    // Use encodeURIComponent to safely pass Bangla text in URL
+                    thumbnail: `https://placehold.co/400x225/C4302B/FFFFFF?text=${encodeURIComponent(channelName)}`,
+                    desc: template.desc,
+                    fullDescription: template.full,
+                    youtubeLink: template.youtubeLink
+                });
+            }
+
+            // Populate the grid with channel cards
+            channels.forEach(channel => {
+                const card = document.createElement('div');
+                card.className = 'book-card';
+                card.innerHTML = `
+                    <div class="book-cover">
+                        <img src="${channel.thumbnail}" alt="Thumbnail for ${channel.channelName}" loading="lazy">
+                    </div>
+                    <div class="book-info">
+                        <h3>${channel.channelName}</h3>
+                        <p>${channel.desc}</p>
+                        <div class="book-actions">
+                            <button class="btn btn-details" data-id="${channel.id}">বিস্তারিত</button>
+                            <a href="${channel.youtubeLink}" class="btn btn-download" data-id="${channel.id}">চ্যানেলে যান</a>
+                        </div>
+                    </div>
+                `;
+                bookGrid.appendChild(card);
+            });
+
+            // Event Delegation for all buttons on the grid
+            bookGrid.addEventListener('click', function(e) {
+                const target = e.target;
+
+                // Handle "চ্যানেলে যান" (Go to Channel) click
+                if (target.classList.contains('btn-download')) {
+                    e.preventDefault(); // Prevent the link from navigating
+                    loginModal.style.display = 'block'; // Show login modal as requested
+                }
+
+                // Handle "বিস্তারিত" (Details) click
+                if (target.classList.contains('btn-details')) {
+                    const channelId = target.dataset.id;
+                    const channel = channels.find(c => c.id == channelId);
+                    
+                    if (channel) {
+                        // Use a different aspect ratio for the modal
+                        document.getElementById('modal-book-cover').src = channel.thumbnail.replace('400x225', '300x300'); 
+                        document.getElementById('modal-book-title').textContent = channel.channelName;
+                        document.getElementById('modal-book-description').textContent = channel.fullDescription;
+                        detailsModal.style.display = 'block';
+                    }
+                }
+            });
+
+            // Functions to close modals
+            function closeModal(modal) {
+                modal.style.display = 'none';
+            }
+
+            closeLoginBtn.onclick = () => closeModal(loginModal);
+            closeDetailsBtn.onclick = () => closeModal(detailsModal);
+
+            // Close modal if user clicks outside of the modal content
+            window.onclick = function(event) {
+                if (event.target == loginModal) {
+                    closeModal(loginModal);
+                }
+                if (event.target == detailsModal) {
+                    closeModal(detailsModal);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
