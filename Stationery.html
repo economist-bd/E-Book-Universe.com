@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Stationery - E-Book Universe</title>
+    <!-- 
+      Latest Feature: Using Tailwind CSS via CDN
+      This is a modern, utility-first CSS framework that makes responsive design
+      and future modifications much easier.
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuration for Tailwind to use your custom color -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1D5B79',
+                        'primary-dark': '#16465f',
+                        'secondary': '#192a3d',
+                    }
+                },
+                fontFamily: {
+                    sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+                }
+            }
+        }
+    </script>
+    
+    <!-- 
+      Custom CSS for animations.
+      Keeping this separate makes it easy to modify JS-driven animations.
+    -->
+    <style>
+        /* Dynamic Feature: Fade-in on Scroll Animation
+          We will add the 'visible' class with JavaScript when the element is in view.
+        */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dynamic Feature: Mobile menu slide-down animation
+        */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        #mobile-menu.open {
+            max-height: 100vh; /* Set to a large enough value */
+        }
+        
+        /* Dynamic Feature: Smooth dropdown for desktop
+        */
+        .dropdown-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(-10px);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- NEW: Neon Button Effect --- */
+        .btn-neon {
+            /* Using theme() to access your Tailwind colors */
+            box-shadow: 0 0 5px theme('colors.primary'),
+                        0 0 10px theme('colors.primary');
+            transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        /* All neon buttons get a brighter glow on hover */
+        .btn-neon:hover {
+            box-shadow: 0 0 10px theme('colors.primary'),
+                        0 0 20px theme('colors.primary'),
+                        0 0 30px theme('colors.primary');
+        }
+        /* --- End of New Styles --- */
+
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+
+    <!-- 
+      Header: Copied from index_with_dropdown.html for consistency
+    -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+                
+                <!-- Logo -->
+                <a href="index_with_dropdown.html" class="text-2xl font-bold text-primary">E-Book Universe</a>
+
+                <!-- Desktop Navigation (Hidden on mobile) -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <ul class="flex items-center space-x-6">
+                        <!-- All Menus are now Dropdowns -->
+                        <li class="dropdown relative">
+                            <a href="index_with_dropdown.html" class="dropbtn font-medium text-gray-700 hover:text-primary transition-colors">Home</a>
+                            <div class="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 min-w-[180px] z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Homepage V1</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Homepage V2</a>
+                            </div>
+                        </li>
+                        
+                        <li class="dropdown relative">
+                            <a href="books.html" class="dropbtn font-medium text-gray-700 hover:text-primary transition-colors">Books</a>
+                            <div class="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 min-w-[180px] z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Health</a>
+                                <a href="audio.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Audio</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Business</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Sci-Fi</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Romance</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">All Books</a>
+                            </div>
+                        </li>
+
+                        <li class="dropdown relative">
+                            <a href="Motivational.html" class="dropbtn font-medium text-gray-700 hover:text-primary transition-colors">Motivational</a>
+                            <div class="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 min-w-[180px] z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Self-Help</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Biographies</a>
+                            </div>
+                        </li>
+                        
+                        <li class="dropdown relative">
+                            <a href="Our-Books.html" class="dropbtn font-medium text-gray-700 hover:text-primary transition-colors">New Books</a>
+                            <div class="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 min-w-[180px] z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">This Week</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">This Month</a>
+                            </div>
+                        </li>
+
+                        <li class="dropdown relative">
+                            <a href="Explore-Our-Extensive-Library.html" class="dropbtn font-medium text-gray-700 hover:text-primary transition-colors">Collection</a>
+                            <div class="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 min-w-[180px] z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Summer Reading</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Award Winners</a>
+                            </div>
+                        </li>
+                        
+                        <li class="dropdown relative">
+                            <a href="Get-Started.html" class="dropbtn font-medium text-gray-700 hover:text-primary transition-colors">Offer</a>
+                            <div class="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 min-w-[180px] z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Special Deals</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Bundles</a>
+                            </div>
+                        </li>
+
+                        <li class="dropdown relative">
+                            <a href="AboutUs.html" class="dropbtn font-medium text-gray-700 hover:text-primary transition-colors">About Us</a>
+                            <div class="dropdown-content absolute bg-white shadow-lg rounded-md mt-2 min-w-[180px] z-10">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Our Mission</a>
+                                <a href="contact.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Contact</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- Desktop Header Buttons -->
+                    <div class="flex items-center space-x-2">
+                        <a href="login.html" class="btn-neon py-2 px-5 rounded-md font-medium text-primary border-2 border-primary transition-all duration-300 hover:bg-primary hover:text-white">Sign In</a>
+                        <a href="SignUp.html" class="btn-neon py-2 px-5 rounded-md font-medium bg-primary text-white border-2 border-primary transition-all duration-300 hover:bg-primary-dark hover:border-primary-dark">Get Started</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button (Hamburger Icon) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default, toggled by JS) -->
+        <div id="mobile-menu" class="md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <!-- Mobile menu links -->
+                <a href="index_with_dropdown.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Home</a>
+                
+                <a href="books.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Books</a>
+                <a href="#" class="block pl-8 px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary"> - Health</a>
+                <a href="audio.html" class="block pl-8 px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary"> - Audio</a>
+                
+                <a href="Motivational.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Motivational</a>
+                <a href="Our-Books.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">New Books</a>
+                <a href="Explore-Our-Extensive-Library.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">New Collection</a>
+                <a href="Get-Started.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Offer</a>
+                <a href="AboutUs.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">About Us</a>
+                <a href="contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Contact</a>
+            </div>
+            <!-- Mobile menu buttons -->
+            <div class="px-4 py-4 space-y-2">
+                <a href="SignUp.html" class="btn-neon block w-full text-center py-2 px-5 rounded-md font-medium bg-primary text-white hover:bg-primary-dark">Get Started</a>
+                <a href="login.html" class="btn-neon block w-full text-center py-2 px-5 rounded-md font-medium text-primary border-2 border-primary hover:bg-primary hover:text-white">Sign In</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Stationery Hero Section -->
+        <section class="bg-blue-50 py-20 md:py-32 text-center">
+            <div class="container mx-auto px-4">
+                <h1 class="text-3xl md:text-5xl font-extrabold text-secondary mb-4 fade-in">Student Stationery Essentials</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8 fade-in" style="transition-delay: 100ms;">Gear up for success! Find all the notebooks, pens, and tools you need to ace your studies.</p>
+                <a href="#collection" class="btn-neon py-3 px-8 text-lg rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark transform hover:scale-105 fade-in" style="transition-delay: 200ms;">Shop All Deals</a>
+            </div>
+        </section>
+
+        <!-- Stationery Collection Section -->
+        <section id="collection" class="py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-secondary mb-12 fade-in">Our Stationery Collection</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Item Card 1: Notebooks -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 fade-in">
+                        <div class="overflow-hidden">
+                            <img class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105" src="https://images.unsplash.com/photo-1456735180808-be669c530b8a?w=500&q=80" alt="Colorful notebooks">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-secondary">Premium Notebook Set (5-Pack)</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">College-ruled, 100-page notebooks in vibrant colors. Perfect for every subject.</p>
+                            <div class="text-2xl font-bold text-primary mb-4">$14.99</div>
+                            <div class="pt-4">
+                                <a href="#" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item Card 2: Pens -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 fade-in" style="transition-delay: 100ms;">
+                        <div class="overflow-hidden">
+                            <img class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105" src="https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?w=500&q=80" alt="Gel pens">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-secondary">Gel Pen Super Set (24 Colors)</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Smooth-writing gel ink that won't smudge. Includes glitter, neon, and standard colors.</p>
+                            <div class="text-2xl font-bold text-primary mb-4">$12.99</div>
+                            <div class="pt-4">
+                                <a href="#" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item Card 3: Highlighters -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 fade-in" style="transition-delay: 200ms;">
+                        <div class="overflow-hidden">
+                            <img class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105" src="https://images.unsplash.com/photo-1587120468352-83e2c33a05a2?w=500&q=80" alt="Pastel highlighters">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-secondary">Pastel Highlighters (6-Pack)</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Smear-proof, chisel-tip highlighters in soft, easy-on-the-eyes pastel shades.</p>
+                            <div class="text-2xl font-bold text-primary mb-4">$7.99</div>
+                            <div class="pt-4">
+                                <a href="#" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Item Card 4: Backpack -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 fade-in">
+                        <div class="overflow-hidden">
+                            <img class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105" src="https://images.unsplash.com/photo-1553062407-98eeb68c6a62?w=500&q=80" alt="Student backpack">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-secondary">Tech-Ready Backpack</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Durable, water-resistant backpack with a padded laptop sleeve and USB charging port.</p>
+                            <div class="text-2xl font-bold text-primary mb-4">$49.99</div>
+                            <div class="pt-4">
+                                <a href="#" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Item Card 5: Planner -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 fade-in" style="transition-delay: 100ms;">
+                        <div class="overflow-hidden">
+                            <img class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105" src="https://images.unsplash.com/photo-1516410529446-0c777cb76569?w=500&q=80" alt="Academic planner">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-secondary">2025-26 Academic Planner</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Stay organized with monthly and weekly spreads, goal-tracking, and sticker sheets.</p>
+                            <div class="text-2xl font-bold text-primary mb-4">$18.99</div>
+                            <div class="pt-4">
+                                <a href="#" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Item Card 6: Desk Organizer -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-Y-1 fade-in" style="transition-delay: 200ms;">
+                        <div class="overflow-hidden">
+                            <img class="w-full h-64 object-cover transition-transform duration-300 hover:scale-105" src="https://images.unsplash.com/photo-1593064074558-a99f6f69d20c?w=500&q=80" alt="Desk organizer">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-semibold mb-2 text-secondary">Mesh Desk Organizer</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Keep your desk tidy. Includes compartments for pens, notes, and paper clips.</p>
+                            <div class="text-2xl font-bold text-primary mb-4">$15.99</div>
+                            <div class="pt-4">
+                                <a href="#" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 
+      Footer: Copied from index_with_dropdown.html for consistency
+    -->
+    <footer class="bg-secondary text-gray-300 pt-16 pb-8 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                
+                <!-- Footer About -->
+                <div class="md:col-span-2">
+                    <h4 class="text-lg font-semibold text-white mb-4">About E-Book Universe</h4>
+                    <p class="text-gray-400">We are dedicated to providing high-quality digital books to help you learn, grow, and succeed. Our library is curated by experts in various fields.</p>
+                </div>
+                
+                <!-- Footer Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-blue-300 transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-blue-300 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-300 transition-colors">Terms & Conditions</a></li>
+                        <li><a href="#" class="hover:text-blue-300 transition-colors">Cancellation & Refund</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Contact -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Contact Us</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: support@ebookuniverse.com</li>
+                        <li>USA: 01715247588</li>
+                        <li>EU/UK: 01912125156</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="text-center text-gray-400 border-t border-gray-700 pt-8">
+                <p>Copyright by Monjurul © 2025 E-Book Universe. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 
+      JavaScript for Dynamic Features
+      (Mobile Menu Toggle & Scroll Animations)
+    -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // --- Mobile Menu Toggle ---
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', function () {
+                // We toggle a class 'open' to trigger the CSS transition
+                mobileMenu.classList.toggle('open');
+            });
+
+            // --- Intersection Observer for Scroll Animations ---
+            const observerOptions = {
+                root: null, // use the viewport
+                threshold: 0.1, // trigger when 10% of the element is visible
+            };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Add a staggered delay for items in a grid
+                        const delay = entry.target.dataset.delay || (index % 3) * 100; // 0, 100ms, 200ms
+                        entry.target.style.transitionDelay = `${delay}ms`;
+                        
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Stop observing once it's visible
+                    }
+                });
+            };
+
+            const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+            // Observe all elements with the .fade-in class
+            const elementsToFadeIn = document.querySelectorAll('.fade-in');
+            elementsToFadeIn.forEach(el => {
+                scrollObserver.observe(el);
+            });
+
+        });
+    </script>
+
+</body>
+</html>
