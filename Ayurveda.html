@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <!-- 
+      UTF-8 এনকোডিং বাংলা অক্ষর সঠিকভাবে দেখানোর জন্য অপরিহার্য। 
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Ayurveda Cookbook - Book Details</title>
+    <style>
+        /* General Body & Font Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header & Dropdown Navbar */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 10px 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1D5B79;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1D5B79;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1D5B79;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropbtn {
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Book Details Section */
+        .book-page-container {
+            display: flex;
+            margin-top: 40px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            flex-wrap: wrap; /* For responsive layout */
+        }
+
+        .book-cover {
+            flex-basis: 300px; /* Fixed width for the cover */
+            flex-shrink: 0;
+        }
+        
+        .book-cover-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .book-info {
+            flex-grow: 1;
+            padding: 30px;
+        }
+
+        .book-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #192a3d;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .book-subtitle {
+            font-size: 1.2em;
+            font-weight: 400;
+            color: #555;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .details-heading-bangla {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #1D5B79;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .book-description-bangla {
+            font-size: 1.1em;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .action-buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-right: 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #1D5B79;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #16465f;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .book-page-container {
+                flex-direction: column;
+            }
+            .book-cover {
+                flex-basis: auto;
+                width: 100%;
+                max-height: 400px;
+            }
+            .book-info {
+                padding: 20px;
+            }
+            .book-title {
+                font-size: 2em;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Hide full nav on mobile, replace with a menu icon */
+            }
+            .navbar {
+                justify-content: center; /* Center logo if nav is hidden */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">E-Book Universe</a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <!-- Dropdown Menu Item -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories</a>
+                    <div class="dropdown-content">
+                        <a href="#">Health & Wellness</a>
+                        <a href="#">Business & Mindset</a>
+                        <a href="#">Lifestyle</a>
+                        <a href="#">Technology</a>
+                    </div>
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Sign In</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content: Book Details -->
+    <main>
+        <div class="container">
+            <div class="book-page-container">
+                <div class="book-cover">
+                    <!-- Placeholder image for the book cover -->
+                    <img src="https://placehold.co/600x800/A0522D/FFFFFF?text=Modern+Ayurveda+Cookbook" alt="Book Cover: Modern Ayurveda Cookbook" class="book-cover-img">
+                </div>
+                <div class="book-info">
+                    <h1 class="book-title">Modern Ayurveda Cookbook</h1>
+                    <p class="book-subtitle">Discover ancient secrets for modern health and vitality through delicious recipes.</p>
+
+                    <h3 class="details-heading-bangla">বিস্তারিত বিবরণ (Details in Bangla)</h3>
+                    
+                    <div class="book-description-bangla">
+                        <p>
+                            আয়ুর্বেদ হলো হাজার বছরের পুরোনো এক জীবন বিজ্ঞান। 'Modern Ayurveda Cookbook' বইটি সেই প্রাচীন প্রজ্ঞাকে আজকের আধুনিক রান্নাঘরে নিয়ে এসেছে। 
+                        </p>
+                        <p>
+                            এই বইটি আপনাকে দেখাবে কীভাবে প্রাচীন আয়ুর্বেদিক নীতিগুলি ব্যবহার করে এমন সুস্বাদু খাবার তৈরি করা যায়, যা আপনার শরীরকে সতেজ করে এবং জীবনীশক্তি বাড়িয়ে তোলে। এটি কেবল তত্ত্বের বই নয়, এটি একটি বাস্তবসম্মত রান্নার গাইড।
+                        </p>
+                        <strong>এই বইয়ে যা যা থাকছে:</strong>
+                        <ul>
+                            <li>সহজে তৈরি করা যায় এমন সকালের নাস্তা, দুপুরের খাবার এবং রাতের খাবারের রেসিপি।</li>
+                            <li>আপনার শরীরের ধরণ (দোষ: বাত, পিত্ত, কফ) অনুযায়ী খাবার চেনার উপায়।</li>
+                            <li>আধুনিক জীবনের ব্যস্ততার মাঝেও স্বাস্থ্যকর খাওয়ার সহজ টিপস।</li>
+                            <li>মৌসুমী ফল ও সবজি ব্যবহার করে কীভাবে শরীরের সর্বোচ্চ পুষ্টি নিশ্চিত করা যায়।</li>
+                            <li>শরীরের বিষাক্ত পদার্থ দূর করতে (Detox) সাহায্য করে এমন পানীয় ও খাবারের প্রস্তুত প্রণালী।</li>
+                        </ul>
+                        <p>
+                            এই বইয়ের সুস্বাদু রেসিপিগুলি অনুসরণ করে আপনার স্বাস্থ্য এবং প্রাণবন্ততা ফিরিয়ে আনুন এবং আধুনিক জীবনের সাথে প্রাচীন জ্ঞানের এক চমৎকার ভারসাম্য তৈরি করুন।
+                        </p>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="#" class="btn btn-primary">এখনই কিনুন (Buy Now)</a>
+                        <a href="#" class="btn btn-secondary">ডেমো ডাউনলোড করুন (Download Demo)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
