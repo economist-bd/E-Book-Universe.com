@@ -1,0 +1,2 @@
+# Ignore local config that contains secret API keys
+config.js
