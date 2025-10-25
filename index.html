@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Book Universe - Your Digital Library</title>
+    <style>
+        /* General Body & Font Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #ffffff;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1D5B79;
+            text-decoration: none;
+        }
+
+        .nav-links ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1D5B79;
+        }
+
+        .header-buttons .btn {
+            margin-left: 10px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #1D5B79;
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+             background-color: #16465f;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #1D5B79;
+            border: 2px solid #1D5B79;
+        }
+
+        .btn-secondary:hover {
+            background-color: #1D5B79;
+            color: #fff;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: #eaf4f8;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            color: #192a3d;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Book Showcase Section */
+        .book-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #192a3d;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .book-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .book-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .book-card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-card h3 {
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        
+        .book-card-footer {
+            margin-top: auto;
+            padding: 0 20px 20px;
+        }
+
+        .book-card .btn {
+            display: block;
+            text-align: center;
+            width: 100%;
+            padding: 12px;
+            background-color: #1D5B79;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .book-card .btn:hover {
+            background-color: #16465f;
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: #192a3d;
+            color: #fff;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-about, .footer-links, .footer-contact {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-content h4 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #e1e8ed;
+        }
+
+        .footer-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-content a {
+            color: #f2f5f7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-content a:hover {
+            color: #8ed1fc;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #3b4d61;
+            font-size: 0.9em;
+            color: #abb8c3;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">E-Book Universe</a>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Our Books</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <a href="#" class="btn btn-secondary">Sign In</a>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Welcome to Your Digital Library</h1>
+                <p>Empower yourself with the knowledge and tools you need to achieve your goals. Explore our vast collection of ebooks today.</p>
+                <a href="#" class="btn btn-primary">Explore Books</a>
+            </div>
+        </section>
+
+        <section class="book-section">
+            <div class="container">
+                <h2 class="section-title">Health & Wellness</h2>
+                <div class="book-grid">
+                    <div class="book-card">
+                        <img src="https://images.unsplash.com/photo-1544716278-e513176f20b5?w=500&q=80" alt="Book Cover: Modern Ayurveda">
+                        <div class="book-card-content">
+                            <h3>Modern Ayurveda Cookbook</h3>
+                            <p>Discover ancient secrets for modern health and vitality through delicious recipes.</p>
+                        </div>
+                         <div class="book-card-footer">
+                            <a href="#" class="btn">Start Now</a>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="https://images.unsplash.com/photo-1591291621226-9745816e30b6?w=500&q=80" alt="Book Cover: Absolute Yoga">
+                        <div class="book-card-content">
+                            <h3>Absolute Yoga</h3>
+                            <p>A comprehensive guide to mastering poses and achieving inner peace.</p>
+                        </div>
+                         <div class="book-card-footer">
+                            <a href="#" class="btn">Start Now</a>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80" alt="Book Cover: Belly Fat">
+                        <div class="book-card-content">
+                            <h3>Lose Your Belly Fat</h3>
+                            <p>Practical, science-backed strategies for a healthier and leaner you.</p>
+                        </div>
+                        <div class="book-card-footer">
+                            <a href="#" class="btn">Start Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="book-section" style="background-color: #ffffff;">
+            <div class="container">
+                <h2 class="section-title">Business & Mindset</h2>
+                <div class="book-grid">
+                    <div class="book-card">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&q=80" alt="Book Cover: Winning Mindset">
+                        <div class="book-card-content">
+                            <h3>The Winning Mindset Formula</h3>
+                            <p>Unlock your potential and cultivate the mindset of a champion in business and life.</p>
+                        </div>
+                        <div class="book-card-footer">
+                            <a href="#" class="btn">Start Now</a>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=500&q=80" alt="Book Cover: Digital Nomad">
+                        <div class="book-card-content">
+                            <h3>Digital Nomad Secrets</h3>
+                            <p>Your ultimate guide to building a business while traveling the world.</p>
+                        </div>
+                        <div class="book-card-footer">
+                            <a href="#" class="btn">Start Now</a>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&q=80" alt="Book Cover: Spiritual Laws">
+                        <div class="book-card-content">
+                            <h3>The 7 Spiritual Laws of Success</h3>
+                            <p>Timeless principles for achieving success in your career and personal life.</p>
+                        </div>
+                        <div class="book-card-footer">
+                            <a href="#" class="btn">Start Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h4>About E-Book Universe</h4>
+                    <p>We are dedicated to providing high-quality digital books to help you learn, grow, and succeed. Our library is curated by experts in various fields.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Cancellation & Refund</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@ebookuniverse.com</p>
+                    <p>USA: +1 833 503 1203</p>
+                    <p>EU/UK: +31 20 323 3138</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>Copyright © 2025 E-Book Universe. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
