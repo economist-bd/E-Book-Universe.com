@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বাংলা অনুপ্রেরণামূলক বই - E-Book Universe</title>
+    <style>
+        /* General Body & Font Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px; /* Wider container for the book grid */
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        main {
+            flex-grow: 1; /* Ensures footer sticks to bottom */
+        }
+
+        /* Header & Dropdown Navbar */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1D5B79;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1D5B79;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1D5B79;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropbtn {
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* Campaign Banner */
+        .campaign-banner {
+            background: linear-gradient(135deg, #1D5B79 0%, #4e8bad 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(29, 91, 121, 0.3);
+        }
+        
+        .campaign-banner h2 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .campaign-banner p {
+            margin: 0 0 20px 0;
+            font-size: 1.2em;
+        }
+        
+        .campaign-banner .btn-campaign {
+            background-color: #FFD700;
+            color: #192a3d;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .campaign-banner .btn-campaign:hover {
+            background-color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Main Content Header */
+        .main-header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .main-header h1 {
+            font-size: 2.8em;
+            color: #192a3d;
+            margin: 0;
+        }
+        
+        .main-header p {
+            font-size: 1.2em;
+            color: #6c757d;
+        }
+
+        /* Book Grid */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        /* Book Card */
+        .book-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background-color: #eee;
+        }
+
+        .book-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: #343a40;
+        }
+
+        .book-info p {
+            margin: 0 0 15px 0;
+            font-size: 0.9em;
+            color: #6c757d;
+            flex-grow: 1;
+        }
+        
+        .book-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            flex-grow: 1;
+            border: none;
+            font-size: 0.9em;
+        }
+        
+        .btn-details {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-download {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        /* Modal (Popup) Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1001; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s;
+        }
+
+        /* --- Glassmorphism Style --- */
+        .modal-content {
+            background: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* For Safari */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #222; /* Darker text for readability */
+            
+            margin: 10% auto;
+            padding: 30px;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            animation: slideIn 0.4s;
+        }
+
+        .close-btn {
+            color: #333; /* Darker close button */
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-btn:hover {
+            color: black;
+        }
+
+        /* Modal Specific Styles */
+        #loginModal h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #111;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background: rgba(255,255,255,0.8);
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            font-size: 1.1em;
+        }
+        
+        #detailsModalContent {
+            display: flex;
+            gap: 20px;
+        }
+        
+        #modal-book-cover {
+            width: 150px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+        
+        #modal-book-details h2 {
+            margin: 0 0 10px;
+            color: #111;
+        }
+        
+        #modal-book-details p {
+            line-height: 1.7;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideIn {
+            from {transform: translateY(-50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #192a3d;
+            color: #f4f7f9;
+            margin-top: 40px;
+        }
+        
+        footer p {
+            margin: 0;
+            color: #abb8c3;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Hide full nav on mobile */
+            }
+            .navbar {
+                justify-content: center; /* Center logo if nav is hidden */
+            }
+            .campaign-banner h2 {
+                font-size: 2em;
+            }
+            #detailsModalContent {
+                flex-direction: column;
+                align-items: center;
+            }
+            #modal-book-cover {
+                width: 100%;
+                height: 200px;
+                object-fit: contain;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">E-Book Universe</a>
+            <ul class="nav-links">
+                <li><a href="#">হোম</a></li>
+                <!-- Dropdown Menu Item -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">ক্যাটাগরি</a>
+                    <div class="dropdown-content">
+                        <a href="#">স্বাস্থ্য ও সুস্থতা</a>
+                        <a href="#">ব্যবসা ও মানসিকতা</a>
+                        <a href="#">জীবনধারা</a>
+                        <a href="#">প্রযুক্তি</a>
+                    </div>
+                </li>
+                <li><a href="#">আমাদের সম্পর্কে</a></li>
+                <li><a href="#">যোগাযোগ</a></li>
+                <li><a href="#">লগ ইন</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Campaign Banner -->
+    <div class="campaign-banner">
+        <h2>বিশেষ ছাড়!</h2>
+        <p>এই সপ্তাহের সেরা বইগুলোর উপর পাচ্ছেন ৩০% পর্যন্ত ছাড়।</p>
+        <a href="#" class="btn-campaign">অফার দেখুন</a>
+    </div>
+
+    <!-- Main Content: Book Library -->
+    <main class="container">
+        <div class="main-header">
+            <h1>অনুপ্রেরণামূলক বই</h1>
+            <p>আপনার জীবন বদলে দেওয়ার মতো সেরা কিছু বইয়ের সংগ্রহ।</p>
+        </div>
+        
+        <div id="bookGrid" class="book-grid">
+            <!-- Book cards will be dynamically inserted here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeLogin">&times;</span>
+            <h2>লগইন আবশ্যক</h2>
+            <p>বইয়ের ডেমো ডাউনলোড করার জন্য অনুগ্রহ করে লগইন করুন।</p>
+            <form>
+                <div class="form-group">
+                    <label for="username">ইউজারনেম অথবা ইমেইল</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">পাসওয়ার্ড</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-submit">লগইন</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Details Modal (Glass Style) -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeDetails">&times;</span>
+            <div id="detailsModalContent">
+                <img id="modal-book-cover" src="" alt="বইয়ের কভার">
+                <div id="modal-book-details">
+                    <h2 id="modal-book-title"></h2>
+                    <p id="modal-book-description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>Copyright © 2025 E-Book Universe. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookGrid = document.getElementById('bookGrid');
+            const loginModal = document.getElementById('loginModal');
+            const detailsModal = document.getElementById('detailsModal');
+            const closeLoginBtn = document.getElementById('closeLogin');
+            const closeDetailsBtn = document.getElementById('closeDetails');
+
+            // List of 15 unique Bangla motivational book titles and descriptions
+            const bookTemplates = [
+                {
+                    title: 'সাফল্যের সূত্র',
+                    desc: 'সাফল্যের শিখরে পৌঁছানোর বাস্তবসম্মত ও কার্যকরী কৌশল।',
+                    full: 'এই বইটি আপনাকে সাফল্যের মূল সূত্রগুলো সম্পর্কে গভীর জ্ঞান দেবে। এটি শুধু তত্ত্ব নয়, বাস্তব জীবনের উদাহরণ দিয়ে বোঝানো হয়েছে কীভাবে ছোট ছোট পদক্ষেপের মাধ্যমে বড় লক্ষ্য অর্জন করা যায়।'
+                },
+                {
+                    title: 'স্বপ্ন জয়ের পথে',
+                    desc: 'আপনার স্বপ্নকে বাস্তবে রূপ দেওয়ার অনুপ্রেরণামূলক গাইড।',
+                    full: 'আমাদের সবারই স্বপ্ন থাকে, কিন্তু কজনই বা তা পূরণ করতে পারি? এই বইটি আপনাকে শেখাবে কীভাবে সব বাধা পেরিয়ে নিজের স্বপ্নকে জয় করতে হয়। এটি আপনার ভেতরের যোদ্ধাকে জাগ্রত করবে।'
+                },
+                {
+                    title: 'অদম্য ইচ্ছাশক্তি',
+                    desc: 'যেকোনো পরিস্থিতিতে টিকে থাকার মানসিক শক্তি অর্জনের উপায়।',
+                    full: 'ইচ্ছাশক্তিই মানুষের সবচেয়ে বড় অস্ত্র। এই বইয়ের মাধ্যমে আপনি শিখবেন কীভাবে নিজের ইচ্ছাশক্তিকে ইস্পাতের মতো দৃঢ় করা যায় এবং যেকোনো প্রতিকূলতাকে হার মানানো যায়।'
+                },
+                {
+                    title: 'জীবন গড়ার কারিগর',
+                    desc: 'নিজের জীবনকে নতুন করে সাজানোর একটি পূর্ণাঙ্গ নির্দেশিকা।',
+                    full: 'আপনিই আপনার জীবনের সেরা কারিগর। এই বইটি আপনাকে সেই সব যন্ত্রপাতি ও কৌশল সরবরাহ করবে যা দিয়ে আপনি আপনার বর্তমান জীবনকে ভেঙে নতুন করে গড়তে পারবেন, ঠিক যেমনটি আপনি চান।'
+                },
+                {
+                    title: 'ইতিবাচক চিন্তার শক্তি',
+                    desc: 'নেতিবাচকতাকে দূর করে জীবনে পজিটিভিটি আনার উপায়।',
+                    full: 'আপনার চিন্তাই আপনার বাস্তবতাকে তৈরি করে। ইতিবাচক চিন্তাভাবনার মাধ্যমে কীভাবে জীবনের প্রতিটি ক্ষেত্রে সাফল্য, সুখ ও শান্তি আনা যায়, তাই নিয়েই এই বইটির মূল আলোচনা।'
+                },
+                {
+                    title: 'ব্যর্থতা থেকে শিক্ষা',
+                    desc: 'ব্যর্থতাকে সাফল্যের সিঁড়ি হিসেবে ব্যবহারের কৌশল।',
+                    full: 'ব্যর্থতা মানেই শেষ নয়, ব্যর্থতা হলো নতুন করে শুরু করার সুযোগ। এই বইটি আপনাকে শেখাবে কীভাবে প্রতিটি ব্যর্থতা থেকে শিক্ষা নিয়ে আরও শক্তিশালীভাবে ঘুরে দাঁড়াতে হয়।'
+                },
+                {
+                    title: 'সময়ের সেরা ব্যবহার',
+                    desc: 'সময় ব্যবস্থাপনার মাধ্যমে জীবনকে আরও গোছানো ও সফল করুন।',
+                    full: 'সময় হলো পৃথিবীর সবচেয়ে মূল্যবান সম্পদ। কীভাবে প্রতিদিনের ২৪ ঘন্টাকে সবচেয়ে ভালোভাবে কাজে লাগানো যায়, প্রোডাক্টিভিটি বাড়ানো যায় এবং লক্ষ্য অর্জন করা যায়, তার বৈজ্ঞানিক কৌশল এই বইয়ে রয়েছে।'
+                },
+                {
+                    title: 'আত্মবিশ্বাসের জাদু',
+                    desc: 'ভেতরের জড়তা কাটিয়ে আত্মবিশ্বাসী হয়ে ওঠার উপায়।',
+                    full: 'আত্মবিশ্বাসই সাফল্যের চাবিকাঠি। এই বইটি আপনার ভেতরের ভয়, দ্বিধা ও জড়তাকে দূর করে আপনাকে একজন আত্মবিশ্বাসী মানুষ হিসেবে উপস্থাপন করতে সাহায্য করবে।'
+                },
+                {
+                    title: 'লক্ষ্য অর্জনের কৌশল',
+                    desc: 'কীভাবে স্মার্ট লক্ষ্য নির্ধারণ ও তা অর্জন করতে হয়।',
+                    full: 'লক্ষ্য ছাড়া জীবন হালবিহীন নৌকার মতো। এই বইটি আপনাকে শেখাবে কীভাবে বাস্তবসম্মত ও স্মার্ট লক্ষ্য নির্ধারণ করতে হয় এবং সেই লক্ষ্য অর্জনের জন্য ধাপে ধাপে এগিয়ে যেতে হয়।'
+                },
+                {
+                    title: 'মনের লাগাম',
+                    desc: 'মনকে নিয়ন্ত্রণ করে মানসিক প্রশান্তি অর্জনের উপায়।',
+                    full: 'আমাদের মনই আমাদের সবচেয়ে বড় বন্ধু এবং সবচেয়ে বড় শত্রু। এই বইটি আপনাকে মেডিটেশন, মাইন্ডফুলনেস এবং বিভিন্ন বৈজ্ঞানিক উপায়ে মনকে নিয়ন্ত্রণ করার কৌশল শেখাবে।'
+                },
+                {
+                    title: 'বদলে ফেলুন নিজেকে',
+                    desc: 'ছোট ছোট অভ্যাসের মাধ্যমে নিজের সেরা সংস্করণ হয়ে উঠুন।',
+                    full: 'মাত্র ৩০ দিনে কীভাবে নতুন একটি ভালো অভ্যাস গড়ে তোলা যায় এবং পুরনো বদ অভ্যাস ত্যাগ করা যায়, তার একটি সম্পূর্ণ রোডম্যাপ এই বই। নিজের সেরা সংস্করণ হতে আজই পড়া শুরু করুন।'
+                },
+                {
+                    title: 'প্রেরণার বাতিঘর',
+                    desc: 'প্রতিদিন অনুপ্রাণিত থাকার সহজ ও কার্যকরী উপায়।',
+                    full: 'অনুপ্রেরণা হলো জ্বালানির মতো, যা প্রতিদিন প্রয়োজন হয়। এই বইটি আপনার জন্য একটি প্রেরণার বাতিঘর হিসেবে কাজ করবে, যা আপনাকে প্রতিদিন নতুন উদ্যমে কাজ করার শক্তি জোগাবে।'
+                },
+                {
+                    title: 'ছোট অভ্যাস, বড় ফল',
+                    desc: 'ক্ষুদ্র ক্ষুদ্র ভালো অভ্যাসের মাধ্যমে জীবনে আমূল পরিবর্তন আনুন।',
+                    full: 'বড় সাফল্য রাতারাতি আসে না। এটি আসে প্রতিদিনের ছোট ছোট ভালো অভ্যাসের ফলে। এই বইটি আপনাকে সেই সব ছোট অভ্যাস তৈরিতে সাহায্য করবে যা আপনার জীবনে বড় পরিবর্তন আনবে।'
+                },
+                {
+                    title: 'অসম্ভবকে সম্ভব',
+                    desc: 'বড় স্বপ্ন দেখার এবং তা পূরণ করার দুঃসাহসিক গাইড।',
+                    full: 'পৃথিবীতে "অসম্ভব" বলে কিছু নেই। যা আজ অসম্ভব মনে হচ্ছে, কাল তা-ই সম্ভব হবে আপনার প্রচেষ্টায়। এই বইটি আপনাকে সেই দুঃসাহসিক যাত্রার জন্য প্রস্তুত করবে।'
+                },
+                {
+                    title: 'শান্তির খোঁজে',
+                    desc: 'কর্মব্যস্ত জীবনে মানসিক প্রশান্তি খুঁজে পাওয়ার উপায়।',
+                    full: 'বাহ্যিক জগতের কোলাহলে আমরা ভেতরের শান্তি হারিয়ে ফেলি। এই বইটি আপনাকে এই ব্যস্ততার মাঝেও কীভাবে নিজের ভেতরে শান্তি খুঁজে পাওয়া যায় এবং প্রশান্ত জীবনযাপন করা যায়, তার পথ দেখাবে।'
+                }
+            ];
+
+            const books = [];
+            // Generate 100 books by looping through the 15 templates
+            for (let i = 1; i <= 100; i++) {
+                const template = bookTemplates[(i - 1) % 15]; // Cycle through the templates
+                const title = `${template.title} (বই-${i})`; // Add a unique number
+                
+                books.push({
+                    id: i,
+                    title: title,
+                    // Use encodeURIComponent to safely pass Bangla text in URL
+                    cover: `https://placehold.co/400x300/1D5B79/FFFFFF?text=${encodeURIComponent(title)}`,
+                    description: template.desc,
+                    fullDescription: template.full
+                });
+            }
+
+            // Populate the grid with book cards
+            books.forEach(book => {
+                const card = document.createElement('div');
+                card.className = 'book-card';
+                card.innerHTML = `
+                    <div class="book-cover">
+                        <img src="${book.cover}" alt="Cover for ${book.title}" loading="lazy">
+                    </div>
+                    <div class="book-info">
+                        <h3>${book.title}</h3>
+                        <p>${book.description}</p>
+                        <div class="book-actions">
+                            <button class="btn btn-details" data-id="${book.id}">বিস্তারিত</button>
+                            <a href="#" class="btn btn-download" data-id="${book.id}">ডেমো ডাউনলোড</a>
+                        </div>
+                    </div>
+                `;
+                bookGrid.appendChild(card);
+            });
+
+            // Event Delegation for all buttons on the grid
+            bookGrid.addEventListener('click', function(e) {
+                const target = e.target;
+
+                // Handle Download Demo click
+                if (target.classList.contains('btn-download')) {
+                    e.preventDefault(); // Prevent the link from navigating
+                    loginModal.style.display = 'block';
+                }
+
+                // Handle Details click
+                if (target.classList.contains('btn-details')) {
+                    const bookId = target.dataset.id;
+                    const book = books.find(b => b.id == bookId);
+                    
+                    if (book) {
+                        // Use a more portrait-style placeholder for the modal
+                        document.getElementById('modal-book-cover').src = book.cover.replace('400x300', '300x400'); 
+                        document.getElementById('modal-book-title').textContent = book.title;
+                        document.getElementById('modal-book-description').textContent = book.fullDescription;
+                        detailsModal.style.display = 'block';
+                    }
+                }
+            });
+
+            // Functions to close modals
+            function closeModal(modal) {
+                modal.style.display = 'none';
+            }
+
+            closeLoginBtn.onclick = () => closeModal(loginModal);
+            closeDetailsBtn.onclick = () => closeModal(detailsModal);
+
+            // Close modal if user clicks outside of the modal content
+            window.onclick = function(event) {
+                if (event.target == loginModal) {
+                    closeModal(loginModal);
+_p;                }
+            }
+        });
+    </script>
+
+</body>
+</html>
