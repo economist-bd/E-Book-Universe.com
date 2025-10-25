@@ -1,0 +1,1 @@
+This PR adds a config.example.js template and updates .gitignore to exclude local config.js (contains API keys). It does not commit any secrets. Please merge into main to enable deployment steps.
