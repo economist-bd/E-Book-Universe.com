@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - E-Book Universe</title>
+    <style>
+        /* General Body & Font Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header & Dropdown Navbar */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 10px 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1D5B79;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1D5B79;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1D5B79;
+        }
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropbtn {
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* About Us Content Styles */
+        .main-content {
+            margin-top: 40px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        
+        .main-content h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #192a3d;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 15px;
+        }
+        
+        .main-content h2 {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #1D5B79;
+            margin-top: 30px;
+        }
+        
+        .main-content p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        /* Team Section */
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .team-member {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            flex-basis: 250px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #1D5B79;
+        }
+        
+        .team-member h3 {
+            margin: 0 0 5px 0;
+            color: #192a3d;
+        }
+        
+        .team-member span {
+            font-size: 0.9em;
+            color: #555;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px 20px;
+            background-color: #192a3d;
+            color: #f4f7f9;
+        }
+        
+        footer p {
+            margin: 0;
+            color: #abb8c3;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Hide full nav on mobile */
+            }
+            .navbar {
+                justify-content: center; /* Center logo if nav is hidden */
+            }
+            .main-content {
+                padding: 20px;
+            }
+            .main-content h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">E-Book Universe</a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <!-- Dropdown Menu Item -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories</a>
+                    <div class="dropdown-content">
+                        <a href="#">Health & Wellness</a>
+                        <a href="#">Business & Mindset</a>
+                        <a href="#">Lifestyle</a>
+                        <a href="#">Technology</a>
+                    </div>
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Sign In</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content: About Us -->
+    <main>
+        <div class="container">
+            <div class="main-content">
+                <h1>আমাদের সম্পর্কে (About Us)</h1>
+                
+                <h2>Our Mission (আমাদের লক্ষ্য)</h2>
+                <p>
+                    E-Book Universe-এ আমাদের লক্ষ্য হলো জ্ঞানকে সকলের দোরগোড়ায় পৌঁছে দেওয়া। আমরা বিশ্বাস করি, সঠিক তথ্য এবং শিক্ষা মানুষের জীবন পরিবর্তন করার ক্ষমতা রাখে। আমরা স্বাস্থ্য, ব্যবসা, ব্যক্তিগত উন্নয়ন এবং লাইফস্টাইল সহ বিভিন্ন বিষয়ে উচ্চ-মানের ডিজিটাল বই সরবরাহ করি যা আপনাকে আপনার সেরা সংস্করণ হতে সাহায্য করবে।
+                </p>
+
+                <h2>Our Vision (আমাদের দৃষ্টিভঙ্গি)</h2>
+                <p>
+                    আমরা এমন একটি বিশ্ব কল্পনা করি যেখানে যে কেউ, যে কোনো স্থান থেকে, সাশ্রয়ী মূল্যে মানসম্পন্ন শিক্ষা এবং জ্ঞান অর্জন করতে পারে। আমাদের দৃষ্টিভঙ্গি হলো ডিজিটাল বইয়ের মাধ্যমে শেখার প্রক্রিয়াকে সহজ, আনন্দদায়ক এবং সবার জন্য উন্মুক্ত করে তোলা।
+                </p>
+
+                <h2>Our Team (আমাদের টিম)</h2>
+                <p>
+                    আমরা একদল নিবেদিতপ্রাণ লেখক, সম্পাদক এবং প্রযুক্তিবিদ, যারা বই এবং জ্ঞানের প্রতি গভীরভাবে অনুরাগী। আমাদের টিম সেরা কন্টেন্ট নির্বাচন করতে এবং সেটিকে আপনার কাছে সবচেয়ে সহজ উপায়ে পৌঁছে দিতে অক্লান্ত পরিশ্রম করে যাচ্ছে।
+                </p>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://placehold.co/120x120/E8F0F2/333?text=CEO" alt="Team Member 1">
+                        <h3>আরিফ রহমান</h3>
+                        <span>প্রতিষ্ঠাতা ও সিইও</span>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://placehold.co/120x120/E8F0F2/333?text=Editor" alt="Team Member 2">
+                        <h3>সাদিয়া ইসলাম</h3>
+                        <span>প্রধান সম্পাদক</span>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://placehold.co/120x120/E8F0F2/333?text=CTO" alt="Team Member 3">
+                        <h3>রায়ান চৌধুরী</h3>
+                        <span>প্রধান প্রযুক্তি কর্মকর্তা</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>Copyright © 2025 E-Book Universe. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
