@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Books - E-Book Universe</title>
+    <style>
+        /* General Body & Font Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px; /* Wider container for the book grid */
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        main {
+            flex-grow: 1; /* Ensures footer sticks to bottom */
+        }
+
+        /* Header & Dropdown Navbar */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 10px 20px;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1D5B79;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1D5B79;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1D5B79;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropbtn {
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        /* Main Content Header */
+        .main-header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .main-header h1 {
+            font-size: 2.8em;
+            color: #192a3d;
+            margin: 0;
+        }
+        
+        .main-header p {
+            font-size: 1.2em;
+            color: #6c757d;
+        }
+
+        /* Book Grid */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        /* Book Card */
+        .book-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background-color: #eee;
+        }
+
+        .book-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: #343a40;
+        }
+
+        .book-info p {
+            margin: 0 0 15px 0;
+            font-size: 0.9em;
+            color: #6c757d;
+            flex-grow: 1;
+        }
+        
+        .book-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            flex-grow: 1;
+            border: none;
+            font-size: 0.9em;
+        }
+        
+        .btn-details {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-download {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        /* Modal (Popup) Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1001; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            animation: slideIn 0.4s;
+        }
+
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-btn:hover {
+            color: black;
+        }
+
+        /* Modal Specific Styles */
+        #loginModal h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            font-size: 1.1em;
+        }
+        
+        #detailsModalContent {
+            display: flex;
+            gap: 20px;
+        }
+        
+        #modal-book-cover {
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        
+        #modal-book-details h2 {
+            margin: 0 0 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes slideIn {
+            from {transform: translateY(-50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #192a3d;
+            color: #f4f7f9;
+            margin-top: 40px;
+        }
+        
+        footer p {
+            margin: 0;
+            color: #abb8c3;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none; /* Hide full nav on mobile */
+            }
+            .navbar {
+                justify-content: center; /* Center logo if nav is hidden */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">E-Book Universe</a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <!-- Dropdown Menu Item -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories</a>
+                    <div class="dropdown-content">
+                        <a href="#">Health & Wellness</a>
+                        <a href="#">Business & Mindset</a>
+                        <a href="#">Lifestyle</a>
+                        <a href="#">Technology</a>
+                    </div>
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Sign In</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content: Book Library -->
+    <main class="container">
+        <div class="main-header">
+            <h1>Our Books</h1>
+            <p>Browse our complete collection of e-books and find your next great read.</p>
+        </div>
+        
+        <div id="bookGrid" class="book-grid">
+            <!-- Book cards will be dynamically inserted here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeLogin">&times;</span>
+            <h2>Login Required</h2>
+            <p>Please log in to download the book demo.</p>
+            <form>
+                <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeDetails">&times;</span>
+            <div id="detailsModalContent">
+                <img id="modal-book-cover" src="" alt="Book Cover">
+                <div id="modal-book-details">
+                    <h2 id="modal-book-title"></h2>
+                    <p id="modal-book-description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>Copyright © 2025 E-Book Universe. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookGrid = document.getElementById('bookGrid');
+            const loginModal = document.getElementById('loginModal');
+            const detailsModal = document.getElementById('detailsModal');
+            const closeLoginBtn = document.getElementById('closeLogin');
+            const closeDetailsBtn = document.getElementById('closeDetails');
+
+            const books = [];
+            // Generate data for 100 books
+            for (let i = 1; i <= 100; i++) {
+                books.push({
+                    id: i,
+                    title: `The Secret of Book ${i}`,
+                    // Using a placeholder image service for variety
+                    cover: `https://placehold.co/400x300/5E8B7E/FFFFFF?text=Book+${i}`,
+                    description: `This is a short, engaging summary for 'The Secret of Book ${i}'. It gives a glimpse into the adventures...`,
+                    fullDescription: `Dive deep into the world of 'The Secret of Book ${i}'. This is the full, detailed description that explores the plot, main characters, and the central themes of the narrative. Spanning multiple paragraphs, it provides a comprehensive overview for potential readers, highlighting the unique aspects and selling points of the story, ensuring they are well-informed before making a decision.`
+                });
+            }
+
+            // Populate the grid with book cards
+            books.forEach(book => {
+                const card = document.createElement('div');
+                card.className = 'book-card';
+                card.innerHTML = `
+                    <div class="book-cover">
+                        <img src="${book.cover}" alt="Cover for ${book.title}" loading="lazy">
+                    </div>
+                    <div class="book-info">
+                        <h3>${book.title}</h3>
+                        <p>${book.description}</p>
+                        <div class="book-actions">
+                            <button class="btn btn-details" data-id="${book.id}">Details</button>
+                            <a href="/download/demo/${book.id}" class="btn btn-download" data-id="${book.id}">Download Demo</a>
+                        </div>
+                    </div>
+                `;
+                bookGrid.appendChild(card);
+            });
+
+            // Event Delegation for all buttons on the grid
+            bookGrid.addEventListener('click', function(e) {
+                const target = e.target;
+
+                // Handle Download Demo click
+                if (target.classList.contains('btn-download')) {
+                    e.preventDefault(); // Prevent the link from navigating
+                    loginModal.style.display = 'block';
+                }
+
+                // Handle Details click
+                if (target.classList.contains('btn-details')) {
+                    const bookId = target.dataset.id;
+                    const book = books.find(b => b.id == bookId);
+                    
+                    if (book) {
+                        document.getElementById('modal-book-cover').src = book.cover.replace('400x300', '300x400'); // Get a more portrait-style image for modal
+                        document.getElementById('modal-book-title').textContent = book.title;
+                        document.getElementById('modal-book-description').textContent = book.fullDescription;
+                        detailsModal.style.display = 'block';
+                    }
+                }
+            });
+
+            // Functions to close modals
+            function closeModal(modal) {
+                modal.style.display = 'none';
+            }
+
+            closeLoginBtn.onclick = () => closeModal(loginModal);
+            closeDetailsBtn.onclick = () => closeModal(detailsModal);
+
+            // Close modal if user clicks outside of the modal content
+            window.onclick = function(event) {
+                if (event.target == loginModal) {
+                    closeModal(loginModal);
+                }
+                if (event.target == detailsModal) {
+                    closeModal(detailsModal);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
