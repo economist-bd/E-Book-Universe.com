@@ -74,6 +74,23 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* --- NEW: Neon Button Effect --- */
+        .btn-neon {
+            /* Using theme() to access your Tailwind colors */
+            box-shadow: 0 0 5px theme('colors.primary'),
+                        0 0 10px theme('colors.primary');
+            transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        /* All neon buttons get a brighter glow on hover */
+        .btn-neon:hover {
+            box-shadow: 0 0 10px theme('colors.primary'),
+                        0 0 20px theme('colors.primary'),
+                        0 0 30px theme('colors.primary');
+        }
+        /* --- End of New Styles --- */
+
     </style>
 </head>
 <body class="bg-gray-100 font-sans antialiased">
@@ -155,8 +172,8 @@
 
                     <!-- Desktop Header Buttons -->
                     <div class="flex items-center space-x-2">
-                        <a href="login.html" class="py-2 px-5 rounded-md font-medium text-primary border-2 border-primary transition-all duration-300 hover:bg-primary hover:text-white">Sign In</a>
-                        <a href="SignUp.html" class="py-2 px-5 rounded-md font-medium bg-primary text-white border-2 border-primary transition-all duration-300 hover:bg-primary-dark hover:border-primary-dark">Get Started</a>
+                        <a href="login.html" class="btn-neon py-2 px-5 rounded-md font-medium text-primary border-2 border-primary transition-all duration-300 hover:bg-primary hover:text-white">Sign In</a>
+                        <a href="SignUp.html" class="btn-neon py-2 px-5 rounded-md font-medium bg-primary text-white border-2 border-primary transition-all duration-300 hover:bg-primary-dark hover:border-primary-dark">Get Started</a>
                     </div>
                 </div>
 
@@ -190,8 +207,8 @@
             </div>
             <!-- Mobile menu buttons -->
             <div class="px-4 py-4 space-y-2">
-                <a href="SignUp.html" class="block w-full text-center py-2 px-5 rounded-md font-medium bg-primary text-white hover:bg-primary-dark">Get Started</a>
-                <a href="login.html" class="block w-full text-center py-2 px-5 rounded-md font-medium text-primary border-2 border-primary hover:bg-primary hover:text-white">Sign In</a>
+                <a href="SignUp.html" class="btn-neon block w-full text-center py-2 px-5 rounded-md font-medium bg-primary text-white hover:bg-primary-dark">Get Started</a>
+                <a href="login.html" class="btn-neon block w-full text-center py-2 px-5 rounded-md font-medium text-primary border-2 border-primary hover:bg-primary hover:text-white">Sign In</a>
             </div>
         </div>
     </header>
@@ -202,7 +219,7 @@
             <div class="container mx-auto px-4">
                 <h1 class="text-3xl md:text-5xl font-extrabold text-secondary mb-4 fade-in">Welcome to Your Digital Library</h1>
                 <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8 fade-in" style="transition-delay: 100ms;">Empower yourself with the knowledge and tools you need to achieve your goals. Explore our vast collection of ebooks today.</p>
-                <a href="new-books.html" class="py-3 px-8 text-lg rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark transform hover:scale-105 fade-in" style="transition-delay: 200ms;">Explore Books</a>
+                <a href="new-books.html" class="btn-neon py-3 px-8 text-lg rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark transform hover:scale-105 fade-in" style="transition-delay: 200ms;">Explore Books</a>
             </div>
         </section>
 
@@ -221,7 +238,7 @@
                             <h3 class="text-xl font-semibold mb-2 text-secondary">Modern Ayurveda Cookbook</h3>
                             <p class="text-gray-600 mb-4 flex-grow">Discover ancient secrets for modern health and vitality through delicious recipes.</p>
                             <div class="pt-4">
-                                <a href="Ayurveda.html" class="block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
+                                <a href="Ayurveda.html" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
                             </div>
                         </div>
                     </div>
@@ -235,7 +252,7 @@
                             <h3 class="text-xl font-semibold mb-2 text-secondary">Absolute Yoga</h3>
                             <p class="text-gray-600 mb-4 flex-grow">A comprehensive guide to mastering poses and achieving inner peace.</p>
                             <div class="pt-4">
-                                <a href="yoga.html" class="block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
+                                <a href="yoga.html" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
                             </div>
                         </div>
                     </div>
@@ -249,7 +266,7 @@
                             <h3 class="text-xl font-semibold mb-2 text-secondary">Lose Your Belly Fat</h3>
                             <p class="text-gray-600 mb-4 flex-grow">Practical, science-backed strategies for a healthier and leaner you.</p>
                             <div class="pt-4">
-                                <a href="BellyFat.html" class="block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
+                                <a href="BellyFat.html" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
                             </div>
                         </div>
                     </div>
@@ -272,7 +289,7 @@
                             <h3 class="text-xl font-semibold mb-2 text-secondary">The Winning Mindset Formula</h3>
                             <p class="text-gray-600 mb-4 flex-grow">Unlock your potential and cultivate the mindset of a champion in business and life.</p>
                             <div class="pt-4">
-                                <a href="Mindset-Formula.html" class="block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
+                                <a href="Mindset-Formula.html" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
                             </div>
                         </div>
                     </div>
@@ -285,8 +302,9 @@
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="text-xl font-semibold mb-2 text-secondary">Digital Nomad Secrets</h3>
                             <p class="text-gray-600 mb-4 flex-grow">Your ultimate guide to building a business while traveling the world.</p>
+
                             <div class="pt-4">
-                                <a href="Digital-Nomad-Secrets.html" class="block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
+                                <a href="Digital-Nomad-Secrets.html" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
                             </div>
                         </div>
                     </div>
@@ -300,7 +318,7 @@
                             <h3 class="text-xl font-semibold mb-2 text-secondary">The 7 Spiritual Laws of Success</h3>
                             <p class="text-gray-600 mb-4 flex-grow">Timeless principles for achieving success in your career and personal life.</p>
                             <div class="pt-4">
-                                <a href="The-7-Spiritual-Laws-of-Success.html" class="block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-300 hover:bg-primary-dark">Start Now</a>
+                                <a href="The-7-Spiritual-Laws-of-Success.html" class="btn-neon block w-full text-center py-3 px-5 rounded-md font-medium bg-primary text-white transition-all duration-3D hover:bg-primary-dark">Start Now</a>
                             </div>
                         </div>
                     </div>
@@ -400,4 +418,5 @@
 
 </body>
 </html>
+
 
