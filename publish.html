@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লেখা প্রকাশের স্থান</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #entryForm {
+            margin-bottom: 20px;
+        }
+        #entries {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .entry {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px dotted #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>এখানে আপনার লেখা প্রকাশ করুন</h1>
+
+    <div id="entryForm">
+        <textarea id="newEntry" rows="4" cols="50" placeholder="এখানে আপনার লেখাটি লিখুন"></textarea><br><br>
+        <button onclick="addEntry()">প্রকাশ করুন</button>
+    </div>
+
+    <h2>প্রকাশিত লেখা:</h2>
+    <div id="entries">
+        <!-- লেখাগুলো এখানে প্রদর্শিত হবে -->
+    </div>
+
+    <script>
+        function addEntry() {
+            var text = document.getElementById("newEntry").value;
+            if (text.trim() !== "") {
+                var entryDiv = document.createElement("div");
+                entryDiv.className = "entry";
+                entryDiv.textContent = text;
+
+                document.getElementById("entries").appendChild(entryDiv);
+                document.getElementById("newEntry").value = ""; // টেক্সট এরিয়া খালি করে দেওয়া
+            } else {
+                alert("অনুগ্রহ করে কিছু লিখুন!");
+            }
+        }
+    </script>
+
+</body>
+</html>
