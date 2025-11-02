@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মন্তব্য জানানোর পাতা</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>আপনার মতামত দিন</h2>
+        <form>
+            <label for="topic">বিষয় নির্বাচন করুন:</label>
+            <select id="topic" name="topic">
+                <option value="">একটি বিষয় নির্বাচন করুন</option>
+                <option value="option1">বিষয় ১</option>
+                <option value="option2">বিষয় ২</option>
+                <option value="option3">বিষয় ৩</option>
+                <option value="option4">বিষয় ৪</option>
+                <option value="option5">বিষয় ৫</option>
+                <option value="option6">বিষয় ৬</option>
+                <option value="option7">বিষয় ৭</option>
+                <option value="option8">বিষয় ৮</option>
+                <option value="option9">বিষয় ৯</option>
+                <option value="option10">বিষয় ১০</option>
+            </select>
+
+            <label for="comment">আপনার মন্তব্য:</label>
+            <textarea id="comment" name="comment" rows="4" placeholder="এখানে আপনার মন্তব্য লিখুন"></textarea>
+
+            <button type="submit">জমা দিন</button>
+        </form>
+    </div>
+</body>
+</html>
