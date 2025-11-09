@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pro FlipBook — বইয়ের পাতার মতো ব্লগ</title>
+
+  <!-- Google Font (Bengali friendly) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- PageFlip (StPageFlip) from jsDelivr / unpkg -->
+  <!-- uses the browser build so it runs directly on GitHub Pages -->
+  <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#f6efe6;
+      --paper:#fffdf7;
+      --accent:#d8b899;
+      --text:#222;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(135deg,var(--bg),#fffaf2);
+      font-family:"Noto Serif Bengali", serif;
+      color:var(--text);
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:28px;
+    }
+
+    /* App Shell */
+    .app {
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 1fr 340px;
+      gap:20px;
+      align-items:start;
+    }
+
+    /* Left: Flipbook container */
+    .viewer {
+      background:transparent;
+      padding:18px;
+      min-height:75vh;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+    /* the element where PageFlip mounts */
+    #flipbook {
+      width:100%;
+      max-width:820px;
+      height:78vh;
+      margin:0 auto;
+      border-radius:10px;
+      box-shadow:0 20px 50px rgba(20,20,20,0.12);
+    }
+
+    /* Right: Controls / Sidebar */
+    .sidebar{
+      background:var(--paper);
+      border-radius:12px;
+      padding:16px;
+      height:fit-content;
+      box-shadow:0 8px 30px rgba(0,0,0,0.06);
+      position:sticky;
+      top:28px;
+    }
+    .h{font-weight:600;margin-bottom:8px}
+    .row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+
+    button, select, input[type="range"]{
+      font-family:inherit;
+      font-size:15px;
+    }
+
+    .btn{
+      background:var(--accent);
+      border:none;padding:9px 12px;border-radius:8px;cursor:pointer;
+      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    }
+    .btn.secondary{background:#f2f2f2;color:#222;border:1px solid #e6e6e6}
+    .small{padding:6px 8px;font-size:14px}
+
+    /* Book-list */
+    .books{max-height:300px;overflow:auto;padding-right:6px}
+    .book-card{padding:10px;border-radius:8px;background:linear-gradient(180deg,#fff,#fffaf2);margin-bottom:8px;cursor:pointer}
+    .book-card.active{outline:3px solid rgba(216,184,153,0.25)}
+
+    .controls {
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .indicator{font-size:14px;color:#444;margin-left:6px}
+
+    /* Mobile responsiveness */
+    @media (max-width:980px){
+      .app{grid-template-columns:1fr; padding:8px}
+      .sidebar{position:static; margin-top:12px}
+      #flipbook{height:62vh}
+    }
+
+    /* Dark mode */
+    body.dark{background:#111; color:#ddd}
+    body.dark .sidebar{background:#161616;color:#ddd}
+    body.dark .btn.secondary{background:#222;color:#ddd;border-color:#333}
+    body.dark .book-card{background:linear-gradient(180deg,#1b1b1b,#161616)}
+  </style>
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- LEFT: Viewer -->
+    <div class="viewer">
+      <div id="flipbook"></div>
+    </div>
+
+    <!-- RIGHT: Sidebar / Controls -->
+    <aside class="sidebar" aria-label="Controls">
+      <div class="h">Pro FlipBook — নিয়ন্ত্রণ</div>
+
+      <div class="row">
+        <select id="bookSelect" style="flex:1">
+          <!-- options are filled from JS -->
+        </select>
+        <button class="btn small" id="loadBookBtn">লোড</button>
+      </div>
+
+      <div class="h" style="margin-top:6px">বই তালিকা</div>
+      <div class="books" id="booksList" aria-live="polite"></div>
+
+      <div class="h" style="margin-top:6px">পঠন নিয়ন্ত্রণ</div>
+      <div class="row">
+        <button id="prevBtn" class="btn small">← পূর্বের</button>
+        <button id="nextBtn" class="btn small">পরের →</button>
+        <span class="indicator" id="pageIndicator">পৃষ্ঠা — / —</span>
+      </div>
+
+      <div style="margin-top:12px" class="h">Auto features</div>
+      <div class="row">
+        <label><input type="checkbox" id="autoScrollToggle"> Auto-scroll (পৃষ্ঠার মধ্যে)</label>
+      </div>
+      <div class="row">
+        <label><input type="checkbox" id="autoTurnToggle"> Auto-page-turn</label>
+        <input id="autoTurnInterval" type="range" min="3" max="25" value="8" style="flex:1">
+      </div>
+      <div style="font-size:13px;color:#555;margin-bottom:8px">অন্তর্বর্তী: <span id="autoTurnVal">8</span> সেকেন্ড</div>
+
+      <div class="h">ভয়েস রিডিং</div>
+      <div class="row">
+        <button id="ttsPlay" class="btn small">পড়া শুরু</button>
+        <button id="ttsPause" class="btn small secondary">বিরতি</button>
+      </div>
+      <div style="font-size:13px;color:#555;margin-top:6px">
+        ভয়েস: <select id="voiceSelect"></select>
+      </div>
+
+      <div class="h" style="margin-top:8px">ব্যাকগ্রাউন্ড মিউজিক</div>
+      <div class="row">
+        <button id="musicPlay" class="btn small">Play</button>
+        <button id="musicPause" class="btn small secondary">Pause</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+        ভলিউম: <input id="musicVol" type="range" min="0" max="1" step="0.01" value="0.12" style="flex:1">
+      </div>
+
+      <div style="margin-top:12px" class="h">Appearance</div>
+      <div class="row">
+        <button id="darkToggle" class="btn small">Dark Mode</button>
+        <button id="downloadBtn" class="btn small secondary">Export PDF</button>
+      </div>
+
+      <div style="margin-top:10px;font-size:13px;color:#666">
+        নির্দেশ: নতুন বই/অধ্যায় যোগ করতে `books` জাভাস্ক্রিপ্ট অবজেক্টে কনটেন্ট যোগ করো (README নীচে)।
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Background music (sample royalty-free short loop). Replace src with your file or GitHub file path -->
+  <audio id="bgMusic" loop crossorigin="anonymous">
+    <source src="https://cdn.jsdelivr.net/gh/tonsky/rumble@main/sample-loop.mp3" type="audio/mpeg">
+    <!-- If you host your own music: use relative path like /assets/music.mp3 -->
+  </audio>
+
+  <script>
+  /* ==========================
+     Sample data structure (Books -> Chapters -> Pages).
+     নতুন বই/অধ্যায় যোগ করতে এখানে কনটেন্ট যুক্ত করো।
+     Pages can contain HTML markup (keep it simple).
+     ========================== */
+
+  const books = [
+    {
+      id: 'budget-bd',
+      title: 'বাংলাদেশের জাতীয় বাজেট',
+      cover: '', // optional (URL)
+      chapters: [
+        {
+          id: 'intro',
+          title: 'ভূমিকা',
+          pages: [
+            `<h1>বাংলাদেশের জাতীয় বাজেট</h1>
+             <p>বাংলাদেশের সরকারি বাজেট হলো একটি বার্ষিক অর্থনৈতিক পরিকল্পনা, যেখানে সরকার নির্ধারণ করে আগামী অর্থবছরে কীভাবে আয় ও ব্যয় পরিচালিত হবে।</p>
+             <p>এটি দেশের অর্থনীতির দিকনির্দেশনা দেয় এবং সামাজিক, অবকাঠামোগত ও উন্নয়নমূলক লক্ষ্য অর্জনে গুরুত্বপূর্ণ ভূমিকা রাখে।</p>`
+          ]
+        },
+        {
+          id: 'types',
+          title: 'বাজেটের ধরন',
+          pages: [
+            `<h2>রাজস্ব বাজেট ও উন্নয়ন বাজেট</h2>
+             <p>সরকারি বাজেট মূলত দুটি অংশে বিভক্ত — রাজস্ব বাজেট ও উন্নয়ন বাজেট। রাজস্ব বাজেটে সরকারের দৈনন্দিন আয় ও ব্যয় ধরা হয়।</p>`,
+            `<h2>উন্নয়ন বাজেট</h2>
+             <p>উন্নয়ন বাজেটে অন্তর্ভুক্ত থাকে অবকাঠামো, শিক্ষা, স্বাস্থ্য, কৃষি ইত্যাদি খাতে ব্যয়, যা ADP নামেও পরিচিত।</p>`
+          ]
+        },
+        {
+          id: 'future',
+          title: 'ভবিষ্যৎ-দিকনির্দেশনা',
+          pages: [
+            `<h2>ভবিষ্যৎ দিকনির্দেশনা</h2>
+             <p>বাংলাদেশ এখন ডিজিটাল অর্থনীতি, সবুজ বাজেট ও প্রযুক্তিনির্ভর রাজস্ব প্রশাসনের দিকে অগ্রসর।</p>`
+          ]
+        }
+      ]
+    },
+
+    // Example: another book placeholder (you can duplicate structure)
+    {
+      id: 'story-example',
+      title: 'ছোট গল্প: সোনার নদী',
+      cover: '',
+      chapters: [
+        { id:'c1', title:'অধ্যায় ১', pages:[`<h2>সোনার নদী - অধ্যায় ১</h2><p>এক ছিল শহর... (নমুনা পাঠ)</p>` ] }
+      ]
+    }
+  ];
+
+  /* ============= PageFlip Setup ============= */
+  const container = document.getElementById('flipbook');
+
+  // Create an instance of PageFlip
+  // using the browser build of page-flip (PageFlip is available globally)
+  const pageFlip = new window.PageFlip(container, {
+    width: 750, // base width in px (will be scaled)
+    height: 1000, // base height (controls page proportions)
+    size: "stretch", // "fixed" | "stretch"
+    minWidth: 300,
+    maxWidth: 1200,
+    minHeight: 400,
+    maxHeight: 1400,
+    maxShadowOpacity: 0.2,
+    showCover: true,
+    usePortrait: false
+  });
+
+  // State
+  let currentBook = null;
+  let flatPages = []; // flattened html for pageflip
+  let pageToChapterMap = []; // mapping page index -> {chapterIndex,pageIndex}
+
+  /* Populate book select & list */
+  const bookSelect = document.getElementById('bookSelect');
+  const booksList = document.getElementById('booksList');
+
+  books.forEach((b,bi) => {
+    const opt = document.createElement('option');
+    opt.value = b.id; opt.textContent = b.title;
+    bookSelect.appendChild(opt);
+
+    const card = document.createElement('div');
+    card.className = 'book-card';
+    card.innerHTML = `<strong>${b.title}</strong><div style="font-size:13px;color:#666">${b.chapters.length} অধ্যায়</div>`;
+    card.onclick = () => { bookSelect.value = b.id; loadBook(b.id); };
+    booksList.appendChild(card);
+  });
+
+  document.getElementById('loadBookBtn').addEventListener('click', ()=> loadBook(bookSelect.value));
+
+  /* loadBook: flattens chapters -> pages and loads into PageFlip */
+  async function loadBook(bookId){
+    const book = books.find(b=>b.id===bookId);
+    if(!book) return;
+    currentBook = book;
+    flatPages = [];
+    pageToChapterMap = [];
+
+    // optional cover page
+    flatPages.push(`<div style="display:flex;align-items:center;justify-content:center;height:100%;"><div><h1 style="font-size:34px">${escapeHtml(book.title)}</h1><p style="color:#666;margin-top:8px">Pro FlipBook</p></div></div>`);
+    pageToChapterMap.push({chapter:-1,page:-1});
+
+    book.chapters.forEach((ch,ci) => {
+      // chapter title page
+      flatPages.push(`<div style="padding:28px"><h2>${escapeHtml(ch.title)}</h2></div>`);
+      pageToChapterMap.push({chapter:ci,page:-1});
+      ch.pages.forEach((pg,i)=>{
+        flatPages.push(`<div style="padding:28px">${pg}</div>`);
+        pageToChapterMap.push({chapter:ci,page:i});
+      });
+    });
+
+    // load into pageFlip (needs array of elements or strings)
+    pageFlip.loadFromHTML(flatPages.map(html => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'pf-page';
+      wrapper.innerHTML = `<div style="padding:28px;font-size:18px;line-height:1.85">${html}</div>`;
+      return wrapper;
+    }));
+
+    // update UI
+    updateIndicator();
+  }
+
+  /* Navigation handlers */
+  document.getElementById('nextBtn').addEventListener('click',()=>{
+    pageFlip.flipNext();
+  });
+  document.getElementById('prevBtn').addEventListener('click',()=>{
+    pageFlip.flipPrev();
+  });
+
+  // Show page index
+  pageFlip.on('flip', (e)=>{
+    updateIndicator();
+    if(autoScrollEnabled) startAutoScrollCurrentPage();
+  });
+
+  function updateIndicator(){
+    const current = pageFlip.getCurrentPageIndex(); // 0-based
+    const total = pageFlip.getPageCount();
+    document.getElementById('pageIndicator').textContent = `পৃষ্ঠা ${current+1} / ${total}`;
+  }
+
+  /* ========== Auto-scroll & Auto-page-turn ========== */
+  const autoScrollToggle = document.getElementById('autoScrollToggle');
+  const autoTurnToggle = document.getElementById('autoTurnToggle');
+  const autoTurnInterval = document.getElementById('autoTurnInterval');
+  const autoTurnVal = document.getElementById('autoTurnVal');
+
+  let autoScrollEnabled = false;
+  let autoTurnEnabled = false;
+  let autoTurnTimer = null;
+  let autoScrollTimer = null;
+
+  autoTurnInterval.addEventListener('input', ()=> autoTurnVal.textContent = autoTurnInterval.value);
+  autoScrollToggle.addEventListener('change', ()=> {
+    autoScrollEnabled = autoScrollToggle.checked;
+    if(autoScrollEnabled) startAutoScrollCurrentPage(); else stopAutoScroll();
+  });
+  autoTurnToggle.addEventListener('change', ()=> {
+    autoTurnEnabled = autoTurnToggle.checked;
+    if(autoTurnEnabled) startAutoTurnLoop(); else stopAutoTurnLoop();
+  });
+
+  function startAutoTurnLoop(){
+    stopAutoTurnLoop();
+    autoTurnTimer = setInterval(()=>{
+      if(pageFlip.getCurrentPageIndex() < pageFlip.getPageCount()-1){
+        pageFlip.flipNext();
+      } else {
+        // loop to start
+        pageFlip.flip(0);
+      }
+    }, parseInt(autoTurnInterval.value,10) * 1000);
+  }
+  function stopAutoTurnLoop(){ if(autoTurnTimer){ clearInterval(autoTurnTimer); autoTurnTimer=null; } }
+
+  function startAutoScrollCurrentPage(){
+    stopAutoScroll();
+    if(!autoScrollEnabled) return;
+    // Find current page element inside PageFlip
+    const pageEl = pageFlip.getPageElement(pageFlip.getCurrentPageIndex());
+    if(!pageEl) return;
+    const content = pageEl.querySelector('div');
+    if(!content) return;
+    content.scrollTop = 0;
+    const duration = (parseInt(autoTurnInterval.value,10) || 8) * 1000;
+    const stepMs = 50;
+    const totalSteps = Math.max(1, Math.floor(duration / stepMs));
+    let step = 0;
+    autoScrollTimer = setInterval(()=>{
+      step++;
+      content.scrollTop = (content.scrollHeight - content.clientHeight) * (step/totalSteps);
+      if(step >= totalSteps){ clearInterval(autoScrollTimer); autoScrollTimer=null; if(autoTurnEnabled) pageFlip.flipNext(); }
+    }, stepMs);
+  }
+  function stopAutoScroll(){ if(autoScrollTimer){ clearInterval(autoScrollTimer); autoScrollTimer=null; } }
+
+  /* ====== TTS (Web Speech API) ====== */
+  const synth = window.speechSynthesis;
+  const voiceSelect = document.getElementById('voiceSelect');
+  let voices = [];
+  let ttsUtter = null;
+
+  function populateVoices(){
+    voices = synth.getVoices();
+    voiceSelect.innerHTML = '';
+    // prefer bn voices but allow fallback
+    voices.forEach(v=>{
+      const opt = document.createElement('option');
+      opt.value = v.name;
+      opt.textContent = `${v.name} — ${v.lang}`;
+      voiceSelect.appendChild(opt);
+    });
+    // try select Bengali voice if present
+    const bn = voices.find(v => v.lang && v.lang.startsWith('bn'));
+    if(bn) voiceSelect.value = bn.name;
+  }
+  populateVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateVoices;
+  }
+
+  document.getElementById('ttsPlay').addEventListener('click', ()=> {
+    if(!currentBook){ alert('প্রথমে একটি বই লোড করুন।'); return; }
+    // read current page content text (strip HTML)
+    const pageEl = pageFlip.getPageElement(pageFlip.getCurrentPageIndex());
+    if(!pageEl) return;
+    const text = pageEl.innerText || pageEl.textContent || '';
+    if(!text.trim()) return;
+    if(synth.speaking) synth.cancel();
+    ttsUtter = new SpeechSynthesisUtterance(text);
+    const selectedVoice = voices.find(v=>v.name===voiceSelect.value);
+    if(selectedVoice) ttsUtter.voice = selectedVoice;
+    // attempt Bengali
+    ttsUtter.lang = selectedVoice ? selectedVoice.lang : 'bn-BD';
+    ttsUtter.rate = 0.95;
+    ttsUtter.pitch = 1;
+    ttsUtter.onend = () => { /* finished */ };
+    synth.speak(ttsUtter);
+  });
+
+  document.getElementById('ttsPause').addEventListener('click', ()=>{
+    if(synth.speaking && !synth.paused) synth.pause();
+    else if(synth.paused) synth.resume();
+  });
+
+  /* ========== Background music controls ========== */
+  const music = document.getElementById('bgMusic');
+  const musicPlay = document.getElementById('musicPlay');
+  const musicPause = document.getElementById('musicPause');
+  const musicVol = document.getElementById('musicVol');
+  music.volume = parseFloat(musicVol.value);
+
+  musicPlay.addEventListener('click', ()=> {
+    music.play().catch(()=>{/* autoplay block possible — user interaction required */});
+  });
+  musicPause.addEventListener('click', ()=> music.pause());
+  musicVol.addEventListener('input', ()=> music.volume = parseFloat(musicVol.value));
+
+  /* Dark mode toggle */
+  document.getElementById('darkToggle').addEventListener('click', ()=>{
+    document.body.classList.toggle('dark');
+  });
+
+  /* Export PDF (simple print to PDF) */
+  document.getElementById('downloadBtn').addEventListener('click', ()=>{
+    // Simple approach: open new window with each page as single column and call print.
+    const popup = window.open('', '_blank');
+    popup.document.write('<html><head><title>Export PDF</title>');
+    popup.document.write('<style>body{font-family:"Noto Serif Bengali", serif;padding:30px} .page{page-break-after:always;margin-bottom:20px}</style>');
+    popup.document.write('</head><body>');
+    for(let i=0;i<pageFlip.getPageCount();i++){
+      const pg = pageFlip.getPageElement(i);
+      popup.document.write('<div class="page">' + (pg ? pg.innerHTML : '') + '</div>');
+    }
+    popup.document.write('</body></html>');
+    popup.document.close();
+    setTimeout(()=> popup.print(),800);
+  });
+
+  /* Utilities */
+  function escapeHtml(s){ return s; } // our pages already contain sanitized HTML; if loading raw text, sanitize here.
+
+  /* Initialize: load first book by default */
+  if(books.length) {
+    bookSelect.value = books[0].id;
+    loadBook(books[0].id);
+  }
+
+  /* keyboard shortcuts */
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowRight') pageFlip.flipNext();
+    if(e.key === 'ArrowLeft') pageFlip.flipPrev();
+    if(e.key === ' ') { e.preventDefault(); togglePlayPauseMusic(); }
+  });
+
+  function togglePlayPauseMusic(){ if(music.paused) music.play(); else music.pause(); }
+
+  </script>
+</body>
+</html>
