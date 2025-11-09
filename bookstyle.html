@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বইয়ের পাতার মতো ব্লগ পোস্ট</title>
+  <style>
+    body {
+      background: #f9f5e7;
+      font-family: "Noto Serif Bengali", Georgia, serif;
+      color: #333;
+      line-height: 1.8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .book {
+      width: 700px;
+      height: 90vh;
+      background: #fffaf2;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      padding: 40px 60px;
+      transition: transform 0.6s ease;
+    }
+
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      background: #d8b899;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #cfa177;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="book" id="book">
+    <div class="page active">
+      <h1>বাংলাদেশের বাজেট</h1>
+      <p>বাংলাদেশের সরকারি বাজেট হলো একটি বার্ষিক আর্থিক পরিকল্পনা, যেখানে সরকার আয় ও ব্যয়ের হিসাব নির্ধারণ করে...</p>
+      <p>এই বাজেট দেশের অর্থনৈতিক দিকনির্দেশনা নির্ধারণে গুরুত্বপূর্ণ ভূমিকা রাখে।</p>
+    </div>
+    <div class="page">
+      <h2>বাজেটের ধরন</h2>
+      <p>রাজস্ব বাজেট ও উন্নয়ন বাজেট—এই দুই ভাগে বিভক্ত থাকে...</p>
+      <p>রাজস্ব বাজেটে সরকারের আয়-ব্যয় এবং উন্নয়ন বাজেটে নতুন প্রকল্প বাস্তবায়নের ব্যয় ধরা হয়।</p>
+    </div>
+    <div class="page">
+      <h2>ভবিষ্যৎ দিকনির্দেশনা</h2>
+      <p>ডিজিটাল রাজস্ব প্রশাসন, সবুজ বাজেট এবং প্রযুক্তিনির্ভর ব্যয় নিয়ন্ত্রণের দিকে এগোচ্ছে বাংলাদেশ।</p>
+    </div>
+
+    <div class="controls">
+      <button onclick="prevPage()">← আগের পৃষ্ঠা</button>
+      <button onclick="nextPage()">পরের পৃষ্ঠা →</button>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = 0;
+    const pages = document.querySelectorAll(".page");
+
+    function showPage(index) {
+      pages.forEach(p => p.classList.remove("active"));
+      pages[index].classList.add("active");
+    }
+
+    function nextPage() {
+      if (currentPage < pages.length - 1) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 0) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    }
+  </script>
+
+</body>
+</html>
