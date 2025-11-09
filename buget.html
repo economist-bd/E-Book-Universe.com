@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📖 বইয়ের পাতার মতো ব্লগ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5efe6, #fefcf8);
+      font-family: "Noto Serif Bengali", serif;
+      color: #2b2b2b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .book-container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      height: 85vh;
+      background: #fffdf8;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 50px 60px;
+      transition: all 0.5s ease;
+    }
+
+    h1, h2 {
+      color: #1c1c1c;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 18px;
+      text-align: justify;
+      line-height: 1.9;
+    }
+
+    .page {
+      display: none;
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.6s ease;
+    }
+
+    .page.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .btn {
+      background: #e3c8a8;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #d8b899;
+    }
+
+    .page-indicator {
+      font-size: 15px;
+      color: #555;
+    }
+
+    /* Dark mode toggle */
+    .toggle-dark {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: #d8b899;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    .toggle-dark:hover {
+      background: #cfa177;
+    }
+
+    /* Dark mode styles */
+    body.dark {
+      background: #1e1e1e;
+    }
+    body.dark .book-container {
+      background: #2a2a2a;
+      color: #f4f4f4;
+      box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+    }
+    body.dark .btn, body.dark .toggle-dark {
+      background: #555;
+      color: #f4f4f4;
+    }
+    body.dark .btn:hover, body.dark .toggle-dark:hover {
+      background: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="toggle-dark" onclick="toggleDark()">🌙 Dark Mode</button>
+
+  <div class="book-container" id="book">
+    <div class="page active">
+      <h1>বাংলাদেশের জাতীয় বাজেট</h1>
+      <p>বাংলাদেশের সরকারি বাজেট হলো একটি বার্ষিক অর্থনৈতিক পরিকল্পনা, যেখানে সরকার নির্ধারণ করে আগামী অর্থবছরে কীভাবে আয় ও ব্যয় পরিচালিত হবে।</p>
+      <p>এটি দেশের অর্থনীতির দিকনির্দেশনা দেয় এবং সামাজিক, অবকাঠামোগত ও উন্নয়নমূলক লক্ষ্য অর্জনে গুরুত্বপূর্ণ ভূমিকা রাখে।</p>
+    </div>
+
+    <div class="page">
+      <h2>বাজেটের ধরন</h2>
+      <p>সরকারি বাজেট মূলত দুটি অংশে বিভক্ত — রাজস্ব বাজেট ও উন্নয়ন বাজেট।</p>
+      <p>রাজস্ব বাজেটে সরকারের দৈনন্দিন আয় ও ব্যয় ধরা হয়। উন্নয়ন বাজেটে অন্তর্ভুক্ত থাকে অবকাঠামো, শিক্ষা, স্বাস্থ্য, কৃষি ইত্যাদি খাতে ব্যয়।</p>
+    </div>
+
+    <div class="page">
+      <h2>বাজেট ঘাটতি ও অর্থায়ন</h2>
+      <p>যখন সরকারের ব্যয় আয়কে ছাড়িয়ে যায়, তখন বাজেট ঘাটতি তৈরি হয়।</p>
+      <p>এই ঘাটতি পূরণের জন্য সরকার ব্যাংক ঋণ, বৈদেশিক সহায়তা এবং সঞ্চয়পত্র বিক্রির মাধ্যমে অর্থ সংগ্রহ করে।</p>
+    </div>
+
+    <div class="page">
+      <h2>ভবিষ্যৎ দিকনির্দেশনা</h2>
+      <p>বাংলাদেশ এখন ডিজিটাল অর্থনীতি, সবুজ বাজেট, এবং প্রযুক্তিনির্ভর রাজস্ব প্রশাসনের দিকে অগ্রসর হচ্ছে।</p>
+      <p>এর লক্ষ্য হলো ‘স্মার্ট বাংলাদেশ ২০৪১’ অর্জনের পথে আর্থিক ব্যবস্থাপনা আরও আধুনিক করা।</p>
+    </div>
+
+    <div class="controls">
+      <button class="btn" onclick="prevPage()">← আগের পৃষ্ঠা</button>
+      <span class="page-indicator" id="indicator">পৃষ্ঠা ১ / ৪</span>
+      <button class="btn" onclick="nextPage()">পরের পৃষ্ঠা →</button>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = 0;
+    const pages = document.querySelectorAll(".page");
+    const indicator = document.getElementById("indicator");
+
+    function showPage(index) {
+      pages.forEach(p => p.classList.remove("active"));
+      pages[index].classList.add("active");
+      indicator.textContent = `পৃষ্ঠা ${index + 1} / ${pages.length}`;
+    }
+
+    function nextPage() {
+      if (currentPage < pages.length - 1) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 0) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    }
+
+    function toggleDark() {
+      document.body.classList.toggle("dark");
+    }
+  </script>
+
+</body>
+</html>
