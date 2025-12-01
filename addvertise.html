@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার দোকান | ফিউচারিস্টিক ই-কমার্স</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Hind Siliguri', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9', // Sky Blue
+                        secondary: '#6366f1', // Indigo
+                        dark: '#0f172a',
+                        darker: '#020617',
+                        card: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Loader */
+        .loader { border: 4px solid #f3f3f3; border-radius: 50%; border-top: 4px solid #3498db; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Glassmorphism */
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass-header { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); }
+        
+        /* Dropdown Animation */
+        .group:hover .group-hover\:block { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Youtube Embed aspect ratio */
+        .aspect-video { aspect-ratio: 16 / 9; }
+
+        /* --- 5D ADVERTISEMENT STYLES --- */
+        
+        /* ২. ৫-ডি বিজ্ঞাপন ওভারলে */
+        #flash-ad-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d); /* ডাইনামিক ব্যাকগ্রাউন্ড */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            perspective: 1000px; /* 3D বা 5D এফেক্টের মূল চাবিকাঠি */
+        }
+
+        /* ৩. থ্রিডি/ফাইভডি বক্স */
+        .ad-container {
+            width: 300px;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: floatAndRotate 5s infinite ease-in-out alternate;
+        }
+
+        /* কার্ড ডিজাইন */
+        .ad-card {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            
+            /* 3D পপ-আপ এফেক্ট */
+            transform: translateZ(50px);
+        }
+
+        /* টেক্সট এনিমেশন */
+        .ad-card h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            background: linear-gradient(to right, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 2s infinite alternate;
+        }
+
+        .ad-card p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .offer-badge {
+            background: #ff4757;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            box-shadow: 0 0 20px #ff4757;
+            animation: pulse 1s infinite;
+        }
+
+        /* বাটন ডিজাইন */
+        .enter-btn {
+            padding: 12px 30px;
+            background: white;
+            color: #b21f1f;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .enter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px white;
+        }
+
+        /* ৪. এনিমেশন কি-ফ্রেমস (5D Movements) */
+        @keyframes floatAndRotate {
+            0% { transform: rotateY(-20deg) rotateX(10deg) translateZ(0); }
+            50% { transform: rotateY(0deg) rotateX(0deg) translateZ(50px); }
+            100% { transform: rotateY(20deg) rotateX(-10deg) translateZ(0); }
+        }
+
+        /* অফার টেক্সট পালস করবে */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px #ff4757; }
+            100% { transform: scale(1.1); box-shadow: 0 0 30px #ff4757; }
+        }
+
+        /* পার্টিকেল এফেক্ট */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            animation: moveUp 5s linear infinite;
+        }
+
+        @keyframes moveUp {
+            0% { top: 100%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 0%; opacity: 0; transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-darker text-gray-200 font-sans antialiased overflow-x-hidden" style="overflow: hidden;"> 
+    <!-- Added inline style overflow:hidden initially for the ad -->
+
+    <!-- ================== 5D ADVERTISEMENT START ================== -->
+    <div id="flash-ad-overlay">
+        <div class="particle" style="left: 10%; animation-duration: 3s;"></div>
+        <div class="particle" style="left: 30%; animation-duration: 5s; width: 20px; height: 20px;"></div>
+        <div class="particle" style="left: 70%; animation-duration: 4s;"></div>
+        <div class="particle" style="left: 90%; animation-duration: 6s; width: 15px; height: 15px;"></div>
+
+        <div class="ad-container">
+            <div class="ad-card">
+                <p>স্বাগতম</p>
+                <h1>আমার দোকান</h1>
+                <p>ট্রেন্ডিং সব প্রোডাক্টের সেরা কালেকশন</p>
+                
+                <div class="offer-badge">৫০% ছাড়!</div>
+                <p>আজকের বিশেষ অফার মিস করবেন না</p>
+
+                <button class="enter-btn" onclick="closeAd()">শপিং শুরু করুন ➜</button>
+            </div>
+        </div>
+    </div>
+    <!-- ================== 5D ADVERTISEMENT END ================== -->
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-20 right-5 z-[200] flex flex-col gap-2"></div>
+
+    <!-- MAIN WEBSITE CONTENT WRAPPER (Hidden Initially) -->
+    <div id="main-content" style="display: none;">
+
+        <!-- Navigation -->
+        <nav class="fixed w-full z-[100] glass-header border-b border-gray-800 shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0 cursor-pointer" onclick="app.renderHome()">
+                        <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                            <i class="fas fa-store mr-2"></i>আমার দোকান
+                        </span>
+                    </div>
+                    
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <button onclick="app.renderHome()" class="hover:text-primary px-3 py-2 rounded-md font-medium transition">হোম</button>
+                            <button onclick="app.renderHome(); document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})" class="hover:text-primary px-3 py-2 rounded-md font-medium transition">শপ</button>
+                            
+                            <!-- Dropdown Menu -->
+                            <div class="relative group inline-block text-left">
+                                <button class="hover:text-primary px-3 py-2 rounded-md font-medium transition flex items-center">
+                                    অন্যান্য <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                                </button>
+                                <div class="absolute hidden group-hover:block w-56 bg-card border border-gray-700 rounded-md shadow-lg z-50 mt-0">
+                                    <div class="py-1" id="desktop-pages-menu">
+                                        <a href="#" onclick="app.renderBlogPage()" class="block px-4 py-2 text-sm text-primary font-bold hover:bg-gray-700">ব্লগ ও রিভিউ</a>
+                                        <!-- Dynamic Pages will be injected here -->
+                                        <div class="border-t border-gray-700 my-1"></div>
+                                        <a href="#" onclick="app.showToast('শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">ক্যারিয়ার</a>
+                                        <a href="#" onclick="app.showToast('শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">লোকেশন</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="nav-dashboard-btn" onclick="app.openDashboard()" class="hidden hover:text-primary px-3 py-2 rounded-md font-medium transition">ড্যাশবোর্ড</button>
+                            <button id="nav-admin-btn" onclick="app.openAdmin()" class="hidden text-red-400 hover:text-red-300 px-3 py-2 rounded-md font-medium transition border border-red-900 bg-red-900/20">Admin Panel</button>
+                        </div>
+                    </div>
+
+                    <!-- Right Icons -->
+                    <div class="flex items-center gap-4">
+                        <div class="relative cursor-pointer hover:text-primary transition" onclick="app.toggleCart()">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">0</span>
+                        </div>
+                        
+                        <div id="auth-buttons">
+                            <button onclick="app.openAuthModal()" class="bg-primary hover:bg-sky-600 text-white px-4 py-1.5 rounded-full text-sm font-medium transition shadow-lg shadow-sky-900/50">
+                                লগইন
+                            </button>
+                        </div>
+                        <div id="user-profile" class="hidden flex items-center gap-2">
+                            <span id="user-name" class="hidden md:block text-sm text-gray-300">User</span>
+                            <button onclick="app.logout()" class="text-gray-400 hover:text-white"><i class="fas fa-sign-out-alt"></i></button>
+                        </div>
+
+                        <div class="-mr-2 flex md:hidden">
+                            <button onclick="app.toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-card shadow-xl transform -translate-x-full transition-transform duration-300 z-[150] md:hidden border-r border-gray-700 overflow-y-auto">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-darker">
+                <span class="text-xl font-bold text-primary">মেনু</span>
+                <button onclick="app.toggleMobileMenu()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="app.renderHome(); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium">হোম</button>
+                <div class="border-t border-gray-700 my-2"></div>
+                <p class="px-3 text-xs text-gray-500 uppercase">অন্যান্য পেইজ</p>
+                <button onclick="app.renderBlogPage(); app.toggleMobileMenu()" class="text-primary font-bold hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">ব্লগ ও রিভিউ</button>
+                <div id="mobile-pages-menu">
+                    <!-- Dynamic Pages -->
+                </div>
+                
+                <div class="border-t border-gray-700 my-2"></div>
+                
+                <button id="mob-dashboard-btn" onclick="app.openDashboard(); app.toggleMobileMenu()" class="hidden text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium">ড্যাশবোর্ড</button>
+                <button id="mob-admin-btn" onclick="app.openAdmin(); app.toggleMobileMenu()" class="hidden text-red-400 hover:bg-red-900/20 block w-full text-left px-3 py-2 rounded-md text-base font-medium">অ্যাডমিন প্যানেল</button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="pt-16 min-h-screen">
+            
+            <!-- HOME SECTION -->
+            <div id="home-view">
+                <!-- Hero Section -->
+                <section id="hero-slider" class="relative h-[400px] md:h-[500px] overflow-hidden bg-gray-900">
+                    <div id="slider-container" class="w-full h-full relative"></div>
+                    <button onclick="app.prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-primary transition"><i class="fas fa-chevron-left"></i></button>
+                    <button onclick="app.nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-primary transition"><i class="fas fa-chevron-right"></i></button>
+                </section>
+
+                <!-- Products -->
+                <section id="products-section" class="max-w-7xl mx-auto px-4 py-12">
+                    <h2 class="text-3xl font-bold text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">জনপ্রিয় কালেকশন</h2>
+                    <div class="w-24 h-1 bg-primary mx-auto mb-10 rounded-full"></div>
+
+                    <div class="flex flex-wrap justify-center gap-3 mb-8" id="category-filters">
+                        <button onclick="app.filterCategory('all')" class="px-4 py-2 rounded-full bg-primary text-white text-sm font-medium shadow-lg shadow-primary/30">সব দেখুন</button>
+                    </div>
+
+                    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="col-span-full text-center py-20">
+                            <div class="loader mx-auto"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- BLOG SECTION -->
+            <div id="blog-view" class="hidden max-w-7xl mx-auto px-4 py-12">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary mb-4">ফিউচারিস্টিক ব্লগ & রিভিউ</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">প্রযুক্তির সর্বশেষ আপডেট এবং আমাদের প্রডাক্টের এক্সক্লুসিভ রিভিউ জানুন।</p>
+                    <div class="w-24 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
+                </div>
+                <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="col-span-full text-center py-20"><div class="loader mx-auto"></div></div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="bg-card border-t border-gray-800 text-gray-400 pt-12 pb-6">
+                <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-white text-lg font-bold mb-4">আমার দোকান</h3>
+                        <p class="text-sm">সবচেয়ে আধুনিক এবং ট্রাস্টি অনলাইন শপিং প্ল্যাটফর্ম।</p>
+                    </div>
+                    <div>
+                        <h3 class="text-white text-lg font-bold mb-4">লিঙ্কস</h3>
+                        <ul class="space-y-2 text-sm" id="footer-links">
+                            <!-- Dynamic Links -->
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-white text-lg font-bold mb-4">যোগাযোগ করুন</h3>
+                        <form action="https://formspree.io/f/xldbznvv" method="POST" class="space-y-3">
+                            <input type="email" name="email" placeholder="ইমেইল" class="w-full bg-darker border border-gray-700 rounded px-3 py-2 text-white text-sm" required>
+                            <textarea name="message" rows="2" placeholder="বার্তা" class="w-full bg-darker border border-gray-700 rounded px-3 py-2 text-white text-sm" required></textarea>
+                            <button type="submit" class="w-full bg-primary hover:bg-sky-600 text-white py-2 rounded text-sm font-medium transition">পাঠান</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center mt-12 border-t border-gray-800 pt-6 text-xs">
+                    &copy; 2025 আমার দোকান। সর্বস্বত্ব সংরক্ষিত।
+                </div>
+            </footer>
+        </main>
+
+        <!-- Cart Sidebar -->
+        <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-card shadow-2xl transform translate-x-full transition-transform duration-300 z-[150] border-l border-gray-700 flex flex-col">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-darker">
+                <h2 class="text-lg font-bold text-white"><i class="fas fa-shopping-bag mr-2 text-primary"></i>আপনার কার্ট</h2>
+                <button onclick="app.toggleCart()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times fa-lg"></i></button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4">
+                <div class="text-center text-gray-500 mt-10">আপনার কার্ট খালি</div>
+            </div>
+            <div class="p-4 border-t border-gray-700 bg-darker">
+                <div class="flex justify-between mb-2 text-sm">
+                    <span>সাবটোটাল:</span>
+                    <span id="cart-subtotal">৳ 0</span>
+                </div>
+                <div class="flex justify-between mb-4 text-xl font-bold text-white">
+                    <span>সর্বমোট:</span>
+                    <span id="cart-total-display">৳ 0</span>
+                </div>
+                <button onclick="app.showCheckout()" class="w-full bg-primary hover:bg-sky-600 text-white py-3 rounded-lg font-bold shadow-lg shadow-primary/30 transition">চেকআউট করুন</button>
+            </div>
+        </div>
+
+        <!-- Product Modal -->
+        <div id="product-modal" class="fixed inset-0 z-[200] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-card w-full max-w-4xl rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row relative animate-fade-in border border-gray-700">
+                <button onclick="document.getElementById('product-modal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-white z-10 bg-black/50 rounded-full p-2"><i class="fas fa-times"></i></button>
+                <div class="w-full md:w-1/2 h-64 md:h-auto bg-gray-800 flex items-center justify-center">
+                    <img id="modal-img" src="" class="max-h-full max-w-full object-contain" alt="Product">
+                </div>
+                <div class="w-full md:w-1/2 p-6 md:p-10 flex flex-col">
+                    <span id="modal-category" class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Category</span>
+                    <h2 id="modal-title" class="text-2xl font-bold text-white mb-1">Product Title</h2>
+                    <p id="modal-author" class="text-gray-400 text-sm mb-4 italic">Author Name</p>
+                    <div class="text-2xl font-bold text-secondary mb-6" id="modal-price">৳ 500</div>
+                    <div class="flex-1 overflow-y-auto mb-6 max-h-40">
+                        <p id="modal-desc" class="text-gray-300 text-sm leading-relaxed">Description goes here...</p>
+                    </div>
+                    <div id="modal-actions" class="mt-auto"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BLOG POST MODAL -->
+        <div id="blog-modal" class="fixed inset-0 z-[200] hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="bg-card w-full max-w-4xl rounded-xl shadow-2xl border border-gray-700 relative animate-fade-in max-h-[90vh] flex flex-col">
+                <div class="absolute top-4 right-4 z-10">
+                    <button onclick="document.getElementById('blog-modal').classList.add('hidden')" class="text-white bg-red-600/80 hover:bg-red-600 rounded-full p-2 w-10 h-10 shadow-lg"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="overflow-y-auto flex-1 p-6 md:p-10 custom-scrollbar">
+                    <span id="blog-date" class="text-primary text-sm font-bold tracking-wider block mb-2">Date</span>
+                    <h1 id="blog-title" class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">Blog Title</h1>
+                    <div id="blog-media" class="w-full mb-8 rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-black"></div>
+                    <div id="blog-content" class="text-gray-300 text-lg leading-relaxed space-y-4 whitespace-pre-wrap"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DYNAMIC PAGE MODAL (Attractive Design) -->
+        <div id="page-modal" class="fixed inset-0 z-[200] hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="bg-card w-full max-w-3xl rounded-xl shadow-2xl border border-gray-700 relative animate-fade-in max-h-[90vh] flex flex-col overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800">
+                <button onclick="document.getElementById('page-modal').classList.add('hidden')" class="absolute top-4 right-4 text-white z-10 bg-red-600/80 hover:bg-red-600 rounded-full p-2 w-10 h-10 transition transform hover:rotate-90"><i class="fas fa-times"></i></button>
+                
+                <div class="relative h-32 bg-gradient-to-r from-primary to-secondary flex items-center justify-center shrink-0">
+                    <div class="absolute inset-0 bg-black/20 pattern-grid-lg"></div>
+                    <h1 id="page-modal-title" class="text-3xl md:text-4xl font-bold text-white text-center z-10 px-4 drop-shadow-lg">Page Title</h1>
+                </div>
+                
+                <div class="overflow-y-auto flex-1 p-8 md:p-12 custom-scrollbar">
+                    <div id="page-modal-content" class="text-gray-300 text-lg leading-relaxed whitespace-pre-wrap font-light tracking-wide text-justify">
+                        Loading content...
+                    </div>
+                </div>
+                
+                <div class="p-4 border-t border-gray-700 bg-darker text-center text-gray-500 text-xs">
+                    আমার দোকান &copy; 2025
+                </div>
+            </div>
+        </div>
+
+        <!-- Auth Modal -->
+        <div id="auth-modal" class="fixed inset-0 z-[200] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-card w-full max-w-md rounded-xl shadow-2xl p-8 border border-gray-700 relative">
+                <button onclick="app.closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-white" id="auth-title">লগইন</h2>
+                    <p class="text-gray-400 text-sm">আপনার অর্ডার সম্পন্ন করতে লগইন করুন</p>
+                </div>
+                <form id="auth-form" class="space-y-4" onsubmit="app.handleAuth(event)">
+                    <input type="email" id="auth-email" placeholder="ইমেইল" class="w-full bg-darker border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" required>
+                    <input type="password" id="auth-password" placeholder="পাসওয়ার্ড" class="w-full bg-darker border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none" required>
+                    <button type="submit" class="w-full bg-primary hover:bg-sky-600 text-white py-3 rounded-lg font-bold transition">লগইন করুন</button>
+                </form>
+                <div class="mt-4 text-center text-sm text-gray-400">
+                    <span id="auth-switch-text">অ্যাকাউন্ট নেই?</span>
+                    <button onclick="app.toggleAuthMode()" class="text-primary font-bold hover:underline ml-1" id="auth-switch-btn">রেজিস্টার</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Modal -->
+        <div id="checkout-modal" class="fixed inset-0 z-[200] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-card w-full max-w-lg rounded-xl shadow-2xl p-6 border border-gray-700 max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
+                    <h2 class="text-xl font-bold text-white">চেকআউট</h2>
+                    <button onclick="document.getElementById('checkout-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+                </div>
+                <form onsubmit="app.placeOrder(event)" class="space-y-4">
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-gray-300 uppercase">ডেলিভারি তথ্য</h3>
+                        <input type="text" id="ship-name" placeholder="আপনার নাম" class="w-full bg-darker border border-gray-600 rounded px-3 py-2 text-white" required>
+                        <input type="text" id="ship-phone" placeholder="মোবাইল নাম্বার" class="w-full bg-darker border border-gray-600 rounded px-3 py-2 text-white" required>
+                        <textarea id="ship-address" placeholder="পূর্ণ ঠিকানা" class="w-full bg-darker border border-gray-600 rounded px-3 py-2 text-white" rows="2" required></textarea>
+                    </div>
+                    <div class="space-y-2 mt-4">
+                        <h3 class="text-sm font-bold text-gray-300 uppercase">শিপিং এরিয়া</h3>
+                        <div class="flex gap-4">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="shipping" value="20" class="form-radio text-primary" checked onchange="app.updateTotal()">
+                                <span class="ml-2 text-gray-300">ঢাকা (৳২০)</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="shipping" value="60" class="form-radio text-primary" onchange="app.updateTotal()">
+                                <span class="ml-2 text-gray-300">ঢাকার বাইরে (৳৬০)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="space-y-2 mt-4">
+                        <h3 class="text-sm font-bold text-gray-300 uppercase">পেমেন্ট মেথড</h3>
+                        <select id="payment-method" class="w-full bg-darker border border-gray-600 rounded px-3 py-2 text-white" onchange="app.togglePaymentFields()">
+                            <option value="COD">ক্যাশ অন ডেলিভারি (COD)</option>
+                            <option value="Bkash">বিকাশ</option>
+                        </select>
+                        <div id="bkash-fields" class="hidden space-y-2 bg-gray-800 p-3 rounded border border-pink-700/50">
+                            <p class="text-xs text-pink-400">পার্সোনাল নাম্বার: 017XXXXXXXX (Send Money)</p>
+                            <input type="text" id="bkash-trx" placeholder="Transaction ID" class="w-full bg-darker border border-gray-600 rounded px-3 py-2 text-white text-sm">
+                        </div>
+                    </div>
+                    <div class="mt-6 border-t border-gray-700 pt-4">
+                        <div class="flex justify-between text-lg font-bold text-white">
+                            <span>মোট প্রদেয়:</span>
+                            <span id="final-total">৳ 0</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded font-bold shadow-lg transition mt-4">অর্ডার কনফার্ম করুন</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Panel Modal -->
+        <div id="admin-modal" class="fixed inset-0 z-[200] hidden bg-black bg-opacity-90 overflow-y-auto">
+            <div class="min-h-screen px-4 py-8">
+                <div class="max-w-6xl mx-auto bg-card rounded-xl shadow-2xl border border-gray-700 overflow-hidden">
+                    <div class="bg-gray-800 p-4 flex justify-between items-center border-b border-gray-700 sticky top-0 z-10">
+                        <h2 class="text-xl font-bold text-white text-red-400">অ্যাডমিন প্যানেল</h2>
+                        <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="text-gray-400 hover:text-white px-3 py-1 bg-gray-700 rounded">Close</button>
+                    </div>
+                    <div class="flex flex-col md:flex-row h-[80vh]">
+                        <div class="w-full md:w-48 bg-gray-900 border-r border-gray-700 flex flex-row md:flex-col overflow-x-auto">
+                            <button onclick="app.switchAdminTab('orders')" class="flex-1 p-4 text-left text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-primary transition font-medium border-b md:border-b-0 border-gray-700">অর্ডার</button>
+                            <button onclick="app.switchAdminTab('products')" class="flex-1 p-4 text-left text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-primary transition font-medium border-b md:border-b-0 border-gray-700">পণ্য</button>
+                            <button onclick="app.switchAdminTab('banners')" class="flex-1 p-4 text-left text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-primary transition font-medium border-b md:border-b-0 border-gray-700">ব্যানার</button>
+                            <button onclick="app.switchAdminTab('blog')" class="flex-1 p-4 text-left text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-primary transition font-medium border-b md:border-b-0 border-gray-700">ব্লগ</button>
+                            <button onclick="app.switchAdminTab('pages')" class="flex-1 p-4 text-left text-gray-300 hover:bg-gray-800 hover:text-white focus:bg-gray-800 focus:text-primary transition font-medium">পেজ সেটআপ</button>
+                        </div>
+                        <div class="flex-1 p-6 overflow-y-auto bg-card" id="admin-content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Dashboard Modal -->
+        <div id="dashboard-modal" class="fixed inset-0 z-[200] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-card w-full max-w-4xl rounded-xl shadow-2xl border border-gray-700 flex flex-col max-h-[85vh]">
+                <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-gray-800">
+                    <h2 class="text-xl font-bold text-white">আমার অর্ডারসমূহ</h2>
+                    <button onclick="document.getElementById('dashboard-modal').classList.add('hidden')" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4" id="dashboard-content"></div>
+            </div>
+        </div>
+
+    </div> <!-- END OF MAIN WEBSITE CONTENT -->
+
+    <!-- AD Close Script -->
+    <script>
+        function closeAd() {
+            const adOverlay = document.getElementById('flash-ad-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            // ১. এনিমেশন করে মিলিয়ে যাবে
+            adOverlay.style.transition = "opacity 0.8s ease, transform 0.8s ease";
+            adOverlay.style.opacity = "0";
+            adOverlay.style.transform = "scale(1.5)"; // জুম হয়ে গায়েব হবে
+            
+            // ২. সম্পূর্ণ রিমুভ হবে এবং মেইন সাইট আসবে
+            setTimeout(() => {
+                adOverlay.style.display = 'none';
+                mainContent.style.display = 'block'; // মেইন সাইট দেখাবে
+                document.body.style.overflow = ''; // Remove inline overflow:hidden so Tailwind classes take over
+            }, 800);
+        }
+    </script>
+
+    <!-- Firebase & Application Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, where, serverTimestamp, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+        // --- Firebase Config ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvbRDCCd60z9fJ3qWcghXGvfWoC7VaPio",
+            authDomain: "amar-dukan-b9ddd.firebaseapp.com",
+            projectId: "amar-dukan-b9ddd",
+            storageBucket: "amar-dukan-b9ddd.firebasestorage.app",
+            messagingSenderId: "95496773638",
+            appId: "1:95496773638:web:48bc4fe11834768111a387"
+        };
+
+        const appInstance = initializeApp(firebaseConfig);
+        const auth = getAuth(appInstance);
+        const db = getFirestore(appInstance);
+
+        const state = {
+            currentUser: null,
+            products: [],
+            cart: JSON.parse(localStorage.getItem('cart')) || [],
+            banners: [],
+            posts: [],
+            pages: [],
+            isAdmin: false,
+            adminEmail: 'eco452@gmail.com',
+            authMode: 'login',
+            authRedirect: null,
+            editingProductId: null,
+            editingBannerId: null
+        };
+
+        window.app = {
+            toggleMobileMenu: () => {
+                const menu = document.getElementById('mobile-menu');
+                if (menu.classList.contains('-translate-x-full')) menu.classList.remove('-translate-x-full');
+                else menu.classList.add('-translate-x-full');
+            },
+            toggleCart: () => {
+                const cart = document.getElementById('cart-sidebar');
+                if (cart.classList.contains('translate-x-full')) { cart.classList.remove('translate-x-full'); app.renderCart(); }
+                else cart.classList.add('translate-x-full');
+            },
+            showToast: (msg, type = 'success') => {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                const colors = type === 'success' ? 'bg-green-600' : 'bg-red-600';
+                toast.className = `${colors} text-white px-4 py-3 rounded shadow-lg flex items-center gap-2 transform transition-all duration-300 translate-x-full`;
+                toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> <span>${msg}</span>`;
+                container.appendChild(toast);
+                requestAnimationFrame(() => toast.classList.remove('translate-x-full'));
+                setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(() => toast.remove(), 300); }, 3000);
+            },
+
+            // --- VIEW SWITCHING ---
+            renderHome: () => {
+                document.getElementById('home-view').classList.remove('hidden');
+                document.getElementById('blog-view').classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            },
+            renderBlogPage: async () => {
+                document.getElementById('home-view').classList.add('hidden');
+                document.getElementById('blog-view').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                const pQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+                const pSnapshot = await getDocs(pQuery);
+                state.posts = pSnapshot.docs.map(d => ({id: d.id, ...d.data()}));
+                app.renderBlogGrid();
+            },
+            renderBlogGrid: () => {
+                const grid = document.getElementById('blog-grid');
+                if (state.posts.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">এখনো কোনো পোস্ট নেই</div>`; return; }
+                grid.innerHTML = state.posts.map(post => {
+                    const mediaHtml = post.mediaType === 'video' 
+                        ? `<div class="relative h-48 bg-black flex items-center justify-center"><i class="fas fa-play-circle text-4xl text-white opacity-80"></i><img src="https://img.youtube.com/vi/${app.getYoutubeID(post.mediaUrl)}/hqdefault.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60"></div>` 
+                        : `<div class="h-48 bg-cover bg-center" style="background-image: url('${post.mediaUrl || 'https://via.placeholder.com/400'}');"></div>`;
+                    return `<div class="bg-card border border-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-primary transition group cursor-pointer flex flex-col h-full" onclick="app.openBlogModal('${post.id}')">${mediaHtml}<div class="p-6 flex-1 flex flex-col"><span class="text-xs font-bold text-primary mb-2 uppercase tracking-wide">রিভিউ & ব্লগ</span><h3 class="text-xl font-bold text-white mb-2 line-clamp-2 group-hover:text-primary transition">${post.title}</h3><p class="text-gray-400 text-sm line-clamp-3 mb-4 flex-1">${post.content}</p><div class="flex justify-between items-center mt-auto pt-4 border-t border-gray-700"><span class="text-xs text-gray-500"><i class="far fa-calendar-alt mr-1"></i> ${post.createdAt ? new Date(post.createdAt.seconds * 1000).toLocaleDateString() : 'Today'}</span><span class="text-primary text-sm font-bold">আরও পড়ুন <i class="fas fa-arrow-right ml-1"></i></span></div></div></div>`}).join('');
+            },
+            openBlogModal: (id) => {
+                const post = state.posts.find(p => p.id === id); if (!post) return;
+                document.getElementById('blog-title').innerText = post.title;
+                document.getElementById('blog-date').innerText = post.createdAt ? new Date(post.createdAt.seconds * 1000).toLocaleDateString("bn-BD") : '';
+                document.getElementById('blog-content').innerText = post.content;
+                const mediaContainer = document.getElementById('blog-media');
+                if (post.mediaType === 'video') { const videoId = app.getYoutubeID(post.mediaUrl); mediaContainer.innerHTML = `<iframe class="w-full aspect-video" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`; }
+                else { mediaContainer.innerHTML = `<img src="${post.mediaUrl}" class="w-full h-auto max-h-[500px] object-contain mx-auto">`; }
+                document.getElementById('blog-modal').classList.remove('hidden');
+            },
+            getYoutubeID: (url) => { const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/; const match = url.match(regExp); return (match && match[2].length === 11) ? match[2] : null; },
+
+            // --- PAGE SYSTEM ---
+            openDynamicPage: async (pageSlug) => {
+                const modal = document.getElementById('page-modal');
+                const titleEl = document.getElementById('page-modal-title');
+                const contentEl = document.getElementById('page-modal-content');
+                modal.classList.remove('hidden');
+                titleEl.innerText = "লোডিং...";
+                contentEl.innerText = "দয়া করে অপেক্ষা করুন...";
+                try {
+                    const docRef = doc(db, "pages", pageSlug);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        titleEl.innerText = data.title;
+                        contentEl.innerText = data.content;
+                    } else {
+                        titleEl.innerText = "পেজ পাওয়া যায়নি";
+                        contentEl.innerText = "এই পেজটি এখনো তৈরি করা হয়নি।";
+                    }
+                } catch (error) { titleEl.innerText = "ত্রুটি"; contentEl.innerText = "তথ্য লোড করতে সমস্যা হয়েছে।"; }
+            },
+            renderPagesMenu: () => {
+                const desktopMenu = document.getElementById('desktop-pages-menu');
+                const mobileMenu = document.getElementById('mobile-pages-menu');
+                
+                const fixedHtml = `
+                    <a href="#" onclick="app.renderBlogPage()" class="block px-4 py-2 text-sm text-primary font-bold hover:bg-gray-700">ব্লগ ও রিভিউ</a>
+                `;
+                const dynamicHtml = state.pages.map(p => `
+                    <a href="#" onclick="app.openDynamicPage('${p.id}')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 capitalize">${p.title}</a>
+                `).join('');
+                
+                const footerHtml = `
+                    <div class="border-t border-gray-700 my-1"></div>
+                    <a href="#" onclick="app.showToast('শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">ক্যারিয়ার</a>
+                    <a href="#" onclick="app.showToast('শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">লোকেশন</a>
+                `;
+
+                desktopMenu.innerHTML = fixedHtml + dynamicHtml + footerHtml;
+                
+                const mobDynamicHtml = state.pages.map(p => `
+                    <button onclick="app.openDynamicPage('${p.id}'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm capitalize">${p.title}</button>
+                `).join('');
+                mobileMenu.innerHTML = mobDynamicHtml;
+                
+                const footerLinks = document.getElementById('footer-links');
+                footerLinks.innerHTML = state.pages.map(p => `<li><a href="#" onclick="app.openDynamicPage('${p.id}')" class="hover:text-primary capitalize">${p.title}</a></li>`).join('');
+            },
+
+            // --- AUTH & CHECKOUT FLOW ---
+            openAuthModal: () => { document.getElementById('auth-modal').classList.remove('hidden'); app.toggleAuthMode('login'); },
+            closeAuthModal: () => document.getElementById('auth-modal').classList.add('hidden'),
+            toggleAuthMode: (mode) => {
+                state.authMode = mode ? mode : (state.authMode === 'login' ? 'register' : 'login');
+                const isLogin = state.authMode === 'login';
+                document.getElementById('auth-title').innerText = isLogin ? 'লগইন' : 'রেজিস্ট্রেশন';
+                document.getElementById('auth-switch-text').innerText = isLogin ? 'অ্যাকাউন্ট নেই?' : 'ইতিমধ্যে অ্যাকাউন্ট আছে?';
+                document.getElementById('auth-switch-btn').innerText = isLogin ? 'রেজিস্টার' : 'লগইন';
+            },
+            handleAuth: async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('auth-email').value;
+                const pass = document.getElementById('auth-password').value;
+                try {
+                    if (state.authMode === 'login') {
+                        await signInWithEmailAndPassword(auth, email, pass);
+                        app.showToast('লগইন সফল হয়েছে!');
+                    } else {
+                        await createUserWithEmailAndPassword(auth, email, pass);
+                        app.showToast('রেজিস্ট্রেশন সফল হয়েছে!');
+                    }
+                    app.closeAuthModal();
+                    if(state.authRedirect === 'checkout') {
+                        state.authRedirect = null;
+                        app.showCheckout(); // Auto reopen checkout
+                    }
+                } catch (err) { app.showToast(err.message, 'error'); }
+            },
+            logout: async () => { await signOut(auth); app.showToast('লগআউট সফল হয়েছে'); app.renderHome(); },
+
+            showCheckout: () => {
+                if (state.cart.length === 0) return app.showToast('কার্ট খালি!', 'error');
+                
+                // CHECKOUT FLOW CHANGE: Auth First
+                if (!state.currentUser) {
+                    app.showToast('অর্ডার সম্পন্ন করতে প্রথমে লগইন করুন', 'info');
+                    state.authRedirect = 'checkout';
+                    app.toggleCart(); // Close cart drawer
+                    app.openAuthModal();
+                    return;
+                }
+
+                // If logged in, show checkout
+                const cart = document.getElementById('cart-sidebar');
+                if (!cart.classList.contains('translate-x-full')) app.toggleCart();
+                document.getElementById('checkout-modal').classList.remove('hidden');
+                app.updateTotal();
+            },
+
+            // --- DATA & PRODUCT LOGIC ---
+            fetchData: async () => {
+                const pQuery = query(collection(db, "products"), orderBy("createdAt", "desc"));
+                const pSnapshot = await getDocs(pQuery);
+                state.products = pSnapshot.docs.map(d => ({id: d.id, ...d.data()}));
+                
+                const bQuery = query(collection(db, "banners"), orderBy("createdAt", "desc"));
+                const bSnapshot = await getDocs(bQuery);
+                state.banners = bSnapshot.docs.map(d => ({id: d.id, ...d.data()}));
+
+                // Fetch Pages
+                const pgQuery = query(collection(db, "pages")); // fetch all pages
+                const pgSnapshot = await getDocs(pgQuery);
+                state.pages = pgSnapshot.docs.map(d => ({id: d.id, ...d.data()}));
+
+                app.renderSlider();
+                app.renderProducts(state.products);
+                app.renderPagesMenu();
+            },
+            // ... (Slider, Product Render, Filter logic compacted) ...
+            renderSlider: () => {
+                const container = document.getElementById('slider-container');
+                const slidesData = state.banners.length > 0 ? state.banners : [{img: 'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1600', title: 'ফিউচারিস্টিক গ্যাজেট', sub: 'সেরা দামে সেরা পণ্য'}];
+                container.innerHTML = slidesData.map((s, i) => `<div class="slide absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}" data-index="${i}"><img src="${s.img}" class="w-full h-full object-cover opacity-60"><div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div><div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4"><h2 class="text-4xl md:text-6xl font-bold text-white mb-4 animate-bounce-slow text-shadow-glow">${s.title}</h2><p class="text-xl text-gray-300 mb-8">${s.sub || ''}</p><button onclick="document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})" class="bg-primary hover:bg-sky-600 text-white px-8 py-3 rounded-full font-bold transition shadow-[0_0_20px_rgba(14,165,233,0.5)]">অর্ডার করুন</button></div></div>`).join('');
+                state.currentSlide = 0; if(state.slideInterval) clearInterval(state.slideInterval); state.slideInterval = setInterval(app.nextSlide, 5000);
+            },
+            nextSlide: () => { const s=document.querySelectorAll('.slide'); if(!s.length)return; s[state.currentSlide].classList.remove('opacity-100');s[state.currentSlide].classList.add('opacity-0'); state.currentSlide=(state.currentSlide+1)%s.length; s[state.currentSlide].classList.remove('opacity-0');s[state.currentSlide].classList.add('opacity-100'); },
+            prevSlide: () => { const s=document.querySelectorAll('.slide'); s[state.currentSlide].classList.remove('opacity-100');s[state.currentSlide].classList.add('opacity-0'); state.currentSlide=(state.currentSlide-1+s.length)%s.length; s[state.currentSlide].classList.remove('opacity-0');s[state.currentSlide].classList.add('opacity-100'); },
+            renderProducts: (products) => {
+                const grid = document.getElementById('product-grid');
+                const filters = document.getElementById('category-filters');
+                const categories = ['all', ...new Set(state.products.map(p => p.category))];
+                filters.innerHTML = categories.map(c => `<button onclick="app.filterCategory('${c}')" class="px-4 py-2 rounded-full border border-gray-700 hover:bg-gray-800 hover:border-primary text-gray-300 text-sm font-medium transition capitalize ${c === 'all' ? 'bg-primary text-white border-primary' : ''}">${c}</button>`).join('');
+                if (products.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">কোন পণ্য পাওয়া যায়নি</div>`; return; }
+                grid.innerHTML = products.map(p => {
+                    const isFree = p.price == 0;
+                    return `<div class="bg-card border border-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-primary transition group relative">${isFree ? '<div class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded z-10">ফ্রি</div>' : ''}<div class="relative h-48 overflow-hidden cursor-pointer" onclick="app.openProductModal('${p.id}')"><img src="${p.img || 'https://via.placeholder.com/400'}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"><div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition"></div></div><div class="p-4"><div class="flex justify-between items-start mb-2"><h3 class="text-white font-bold truncate pr-2 cursor-pointer" onclick="app.openProductModal('${p.id}')">${p.title}</h3><span class="text-primary font-bold whitespace-nowrap">${isFree ? 'ফ্রি' : '৳ '+p.price}</span></div><p class="text-gray-400 text-xs mb-3 truncate">${p.author || 'Product'}</p>${isFree ? `<button class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded font-bold mt-2" onclick="window.open('${p.pdf || '#'}', '_blank')"><i class="fas fa-download mr-1"></i> ডাউনলোড করুন</button>` : `<button class="w-full bg-primary hover:bg-sky-600 text-white py-2 rounded font-bold mt-2" onclick="app.addToCart('${p.id}')"><i class="fas fa-cart-plus mr-1"></i> কার্টে নিন</button>`}</div></div>`}).join('');
+            },
+            filterCategory: (cat) => {
+                const btns = document.querySelectorAll('#category-filters button');
+                btns.forEach(b => { if(b.innerText.toLowerCase() === cat.toLowerCase() || (cat==='all' && b.innerText==='all')) { b.classList.add('bg-primary', 'text-white', 'border-primary'); b.classList.remove('text-gray-300'); } else { b.classList.remove('bg-primary', 'text-white', 'border-primary'); b.classList.add('text-gray-300'); } });
+                if (cat === 'all') app.renderProducts(state.products); else app.renderProducts(state.products.filter(p => p.category === cat));
+            },
+            openProductModal: (id) => {
+                const p = state.products.find(p => p.id === id); if (!p) return;
+                document.getElementById('modal-img').src = p.img; document.getElementById('modal-category').innerText = p.category; document.getElementById('modal-title').innerText = p.title; document.getElementById('modal-author').innerText = p.author ? `By ${p.author}` : ''; document.getElementById('modal-price').innerText = p.price == 0 ? "FREE" : `৳ ${p.price}`; document.getElementById('modal-desc').innerText = p.description || 'No description available.';
+                const actions = document.getElementById('modal-actions');
+                if (p.price == 0) { actions.innerHTML = `<button onclick="window.open('${p.pdf}', '_blank')" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold">ডাউনলোড করুন (PDF)</button>`; } else { actions.innerHTML = `<button onclick="app.addToCart('${p.id}'); document.getElementById('product-modal').classList.add('hidden')" class="w-full bg-primary text-white py-3 rounded-lg font-bold">কার্টে যোগ করুন</button>`; }
+                document.getElementById('product-modal').classList.remove('hidden');
+            },
+            addToCart: (id) => { const p = state.products.find(x => x.id === id); if (!p) return; const existing = state.cart.find(x => x.id === id); if (existing) { existing.qty++; } else { state.cart.push({...p, qty: 1}); } app.saveCart(); app.showToast('পণ্য কার্টে যোগ হয়েছে'); },
+            removeFromCart: (id) => { state.cart = state.cart.filter(x => x.id !== id); app.saveCart(); },
+            updateQty: (id, change) => { const item = state.cart.find(x => x.id === id); if (item) { item.qty += change; if (item.qty < 1) app.removeFromCart(id); else app.saveCart(); } },
+            saveCart: () => { localStorage.setItem('cart', JSON.stringify(state.cart)); app.updateCartCount(); app.renderCart(); },
+            updateCartCount: () => { const count = state.cart.reduce((a, b) => a + b.qty, 0); document.getElementById('cart-count').innerText = count; },
+            renderCart: () => { const container = document.getElementById('cart-items'); if (state.cart.length === 0) { container.innerHTML = '<div class="text-center text-gray-500 mt-10">আপনার কার্ট খালি</div>'; document.getElementById('cart-subtotal').innerText = '৳ 0'; document.getElementById('cart-total-display').innerText = '৳ 0'; return; } container.innerHTML = state.cart.map(item => `<div class="flex gap-3 bg-gray-800 p-2 rounded border border-gray-700"><img src="${item.img}" class="w-16 h-16 object-cover rounded"><div class="flex-1"><h4 class="text-white text-sm font-bold truncate">${item.title}</h4><p class="text-primary text-sm font-bold">৳ ${item.price}</p><div class="flex items-center gap-3 mt-1"><button onclick="app.updateQty('${item.id}', -1)" class="w-6 h-6 bg-gray-700 text-white rounded hover:bg-gray-600">-</button><span class="text-gray-300 text-sm">${item.qty}</span><button onclick="app.updateQty('${item.id}', 1)" class="w-6 h-6 bg-gray-700 text-white rounded hover:bg-gray-600">+</button></div></div><button onclick="app.removeFromCart('${item.id}')" class="text-gray-500 hover:text-red-500 self-start"><i class="fas fa-trash"></i></button></div>`).join(''); app.updateTotal(); },
+            updateTotal: () => { const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0); const shipping = document.querySelector('input[name="shipping"]:checked') ? parseInt(document.querySelector('input[name="shipping"]:checked').value) : 20; document.getElementById('cart-subtotal').innerText = `৳ ${subtotal}`; document.getElementById('cart-total-display').innerText = `৳ ${subtotal + shipping}`; if (!document.getElementById('checkout-modal').classList.contains('hidden')) { document.getElementById('final-total').innerText = `৳ ${subtotal + shipping}`; } },
+            togglePaymentFields: () => { const method = document.getElementById('payment-method').value; const bkashDiv = document.getElementById('bkash-fields'); if (method === 'Bkash') bkashDiv.classList.remove('hidden'); else bkashDiv.classList.add('hidden'); },
+            placeOrder: async (e) => {
+                e.preventDefault(); if (!state.currentUser) return app.openAuthModal();
+                const shipping = parseInt(document.querySelector('input[name="shipping"]:checked').value); const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0); const total = subtotal + shipping; const method = document.getElementById('payment-method').value; const trxId = method === 'Bkash' ? document.getElementById('bkash-trx').value : ''; if (method === 'Bkash' && !trxId) return app.showToast('TrxID প্রদান করুন', 'error');
+                const orderData = { userId: state.currentUser.uid, userEmail: state.currentUser.email, customer: { name: document.getElementById('ship-name').value, phone: document.getElementById('ship-phone').value, address: document.getElementById('ship-address').value }, items: state.cart, total: total, shipping: shipping, payment: { method, trxId }, status: 'Pending', createdAt: serverTimestamp() };
+                try { await addDoc(collection(db, "orders"), orderData); state.cart = []; localStorage.removeItem('cart'); app.updateCartCount(); app.renderCart(); document.getElementById('checkout-modal').classList.add('hidden'); app.showToast('অর্ডার সফল হয়েছে! ড্যাশবোর্ড চেক করুন।'); app.openDashboard(); } catch (error) { app.showToast('অর্ডার ফেইল্ড: ' + error.message, 'error'); }
+            },
+            openDashboard: async () => { 
+                if (!state.currentUser) return app.openAuthModal(); 
+                document.getElementById('dashboard-modal').classList.remove('hidden'); 
+                const dContent = document.getElementById('dashboard-content'); 
+                dContent.innerHTML = '<div class="loader mx-auto"></div>'; 
+                
+                // FIX: Removed orderBy('createdAt', 'desc') to avoid composite index error
+                const q = query(collection(db, "orders"), where("userId", "==", state.currentUser.uid)); 
+                
+                try {
+                    const snap = await getDocs(q); 
+                    if (snap.empty) { 
+                        dContent.innerHTML = '<p class="text-center text-gray-400 mt-4">কোন অর্ডার নেই</p>'; 
+                        return; 
+                    } 
+                    
+                    // Client-side sort
+                    const orders = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                    orders.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+                    dContent.innerHTML = orders.map(o => { 
+                        const date = o.createdAt ? new Date(o.createdAt.seconds * 1000).toLocaleDateString() : 'Just now'; 
+                        let statusColor = 'text-yellow-500'; 
+                        if (o.status === 'Delivered') statusColor = 'text-green-500'; 
+                        if (o.status === 'Cancelled') statusColor = 'text-red-500'; 
+                        return `<div class="bg-darker border border-gray-700 p-4 rounded mb-4"><div class="flex justify-between items-center mb-2"><span class="text-sm text-gray-400">#${o.id.slice(0, 6)}</span><span class="font-bold ${statusColor}">${o.status}</span></div><div class="text-sm text-gray-300 mb-2">তারিখ: ${date}</div><div class="space-y-1 mb-3 bg-gray-800 p-2 rounded">${o.items.map(i => `<div class="flex justify-between text-xs text-gray-400"><span>${i.title} x${i.qty}</span><span>৳ ${i.price * i.qty}</span></div>`).join('')}</div><div class="flex justify-between font-bold text-white"><span>মোট বিল:</span><span>৳ ${o.total}</span></div></div>`
+                    }).join(''); 
+                } catch(e) {
+                    console.error(e);
+                    dContent.innerHTML = '<p class="text-center text-red-400 mt-4">Error loading orders</p>';
+                }
+            },
+
+            // --- ADMIN LOGIC ---
+            openAdmin: () => { if (!state.isAdmin) return app.showToast('অ্যাক্সেস ডিনাইড', 'error'); document.getElementById('admin-modal').classList.remove('hidden'); app.switchAdminTab('orders'); },
+            switchAdminTab: (tab) => {
+                const content = document.getElementById('admin-content'); content.innerHTML = '<div class="loader mx-auto"></div>';
+                state.editingProductId = null; state.editingBannerId = null;
+                if (tab === 'orders') app.renderAdminOrders();
+                else if (tab === 'products') app.renderAdminProducts();
+                else if (tab === 'banners') app.renderAdminBanners();
+                else if (tab === 'blog') app.renderAdminBlog();
+                else if (tab === 'pages') app.renderAdminPages();
+            },
+            renderAdminOrders: async () => { const q = query(collection(db, "orders"), orderBy("createdAt", "desc")); const snap = await getDocs(q); const html = snap.docs.map(d => { const o = d.data(); return `<div class="bg-darker border border-gray-700 p-4 rounded mb-4"><div class="flex flex-col md:flex-row justify-between md:items-center gap-4"><div><p class="text-primary font-bold">Order #${d.id}</p><p class="text-xs text-gray-400">Customer: ${o.customer.name} (${o.customer.phone})</p><p class="text-xs text-gray-400">Payment: ${o.payment.method} ${o.payment.trxId ? '- '+o.payment.trxId : ''}</p></div><div class="flex items-center gap-2"><select onchange="app.updateOrderStatus('${d.id}', this.value)" class="bg-gray-800 border border-gray-600 text-white text-sm rounded p-1"><option value="Pending" ${o.status==='Pending'?'selected':''}>Pending</option><option value="Processing" ${o.status==='Processing'?'selected':''}>Processing</option><option value="Delivered" ${o.status==='Delivered'?'selected':''}>Delivered</option><option value="Cancelled" ${o.status==='Cancelled'?'selected':''}>Cancelled</option></select><span class="font-bold text-lg text-white">৳ ${o.total}</span></div></div></div>`; }).join(''); document.getElementById('admin-content').innerHTML = `<h2 class="text-xl font-bold text-white mb-4">Orders Management</h2>` + (html || '<p class="text-gray-400">No orders found.</p>'); },
+            updateOrderStatus: async (id, status) => { try { await updateDoc(doc(db, "orders", id), { status: status }); app.showToast('Status updated'); } catch (e) { app.showToast('Error', 'error'); } },
+            // (Products, Banner, Blog Logic kept compact)
+            renderAdminProducts: async () => { 
+                 const html = `<div class="mb-8 bg-gray-900 p-4 rounded border border-gray-700"><h3 class="text-lg font-bold text-white mb-4">পণ্য ম্যানেজমেন্ট</h3><form onsubmit="app.handleProductSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4"><input type="text" id="p-title" placeholder="পণ্যের নাম" class="bg-darker border border-gray-600 rounded p-2 text-white" required><input type="text" id="p-author" placeholder="লেখক (অপশনাল)" class="bg-darker border border-gray-600 rounded p-2 text-white"><input type="text" id="p-cat" placeholder="ক্যাটাগরি" class="bg-darker border border-gray-600 rounded p-2 text-white" required><input type="number" id="p-price" placeholder="দাম (ফ্রি হলে 0)" class="bg-darker border border-gray-600 rounded p-2 text-white" required onchange="this.value==0 ? document.getElementById('p-pdf-div').classList.remove('hidden') : document.getElementById('p-pdf-div').classList.add('hidden')"><textarea id="p-desc" placeholder="বিবরণ" class="col-span-full bg-darker border border-gray-600 rounded p-2 text-white"></textarea><div class="col-span-full"><label class="text-gray-400 text-sm">Product Image</label><input type="file" id="p-img-file" class="text-gray-400 text-sm w-full" accept="image/*" onchange="app.handleImageUpload(this, 'p-img-base64')"><input type="hidden" id="p-img-base64"></div><div id="p-pdf-div" class="col-span-full hidden"><label class="text-gray-400 text-sm">PDF Link</label><input type="text" id="p-pdf" placeholder="URL" class="w-full bg-darker border border-gray-600 rounded p-2 text-white"></div><button type="submit" class="col-span-full bg-primary text-white py-2 rounded font-bold">সেভ করুন</button></form></div><h3 class="text-lg font-bold text-white mb-4">সকল পণ্য</h3><div class="grid grid-cols-1 gap-4">${state.products.map(p => `<div class="bg-darker p-3 rounded flex justify-between items-center border border-gray-700"><div class="flex items-center gap-3"><img src="${p.img}" class="w-10 h-10 object-cover rounded"><div><p class="text-white font-bold text-sm">${p.title}</p><p class="text-xs text-gray-400">${p.category} | ৳ ${p.price}</p></div></div><button onclick="app.deleteProduct('${p.id}')" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button></div>`).join('')}</div>`; document.getElementById('admin-content').innerHTML = html;
+            },
+            handleProductSubmit: async (e) => { e.preventDefault(); const data = { title: document.getElementById('p-title').value, author: document.getElementById('p-author').value, category: document.getElementById('p-cat').value, price: parseInt(document.getElementById('p-price').value), description: document.getElementById('p-desc').value, img: document.getElementById('p-img-base64').value, pdf: document.getElementById('p-pdf').value, createdAt: serverTimestamp() }; if (!data.img) return app.showToast('ছবি আপলোড করুন', 'error'); try { await addDoc(collection(db, "products"), data); app.showToast('পণ্য যোগ হয়েছে'); app.fetchData(); app.renderAdminProducts(); } catch (e) { app.showToast('Error: ' + e.message, 'error'); } },
+            deleteProduct: async (id) => { if(!confirm('মুছে ফেলতে চান?')) return; try { await deleteDoc(doc(db, "products", id)); app.showToast('পণ্য মুছে ফেলা হয়েছে'); app.fetchData(); app.renderAdminProducts(); } catch (e) { app.showToast('Error', 'error'); } },
+            renderAdminBanners: async () => { const html = `<div class="mb-8 bg-gray-900 p-4 rounded border border-gray-700"><h3 class="text-lg font-bold text-white mb-4">ব্যানার যোগ করুন</h3><form onsubmit="app.addBanner(event)" class="space-y-4"><input type="text" id="b-title" placeholder="টাইটেল" class="w-full bg-darker border border-gray-600 rounded p-2 text-white" required><input type="text" id="b-sub" placeholder="সাব-টাইটেল" class="w-full bg-darker border border-gray-600 rounded p-2 text-white"><input type="file" id="b-img-file" class="text-gray-400 text-sm w-full" accept="image/*" onchange="app.handleImageUpload(this, 'b-img-base64')"><input type="hidden" id="b-img-base64"><button type="submit" class="bg-primary text-white py-2 px-4 rounded font-bold">যোগ করুন</button></form></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4">${state.banners.map(b => `<div class="relative h-32 rounded overflow-hidden border border-gray-700 group"><img src="${b.img}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center"><p class="font-bold text-white">${b.title}</p><button onclick="app.deleteBanner('${b.id}')" class="mt-2 text-red-400 border border-red-400 px-2 rounded text-xs hover:bg-red-400 hover:text-white">Delete</button></div></div>`).join('')}</div>`; document.getElementById('admin-content').innerHTML = html; },
+            addBanner: async (e) => { e.preventDefault(); const data = { title: document.getElementById('b-title').value, sub: document.getElementById('b-sub').value, img: document.getElementById('b-img-base64').value, createdAt: serverTimestamp() }; if (!data.img) return app.showToast('ইমেজ দরকার', 'error'); try { await addDoc(collection(db, "banners"), data); app.showToast('ব্যানার যোগ হয়েছে'); app.fetchData(); app.renderAdminBanners(); } catch (e) { app.showToast('Error', 'error'); } },
+            deleteBanner: async (id) => { if(!confirm('মুছে ফেলতে চান?')) return; try { await deleteDoc(doc(db, "banners", id)); app.fetchData(); app.renderAdminBanners(); } catch(e) { app.showToast('Error', 'error'); } },
+            renderAdminBlog: async () => { const q = query(collection(db, "posts"), orderBy("createdAt", "desc")); const snap = await getDocs(q); const html = `<div class="mb-8 bg-gray-900 p-4 rounded border border-gray-700"><h3 class="text-lg font-bold text-white mb-4">নতুন ব্লগ পোস্ট / রিভিউ</h3><form onsubmit="app.addBlogPost(event)" class="space-y-4"><input type="text" id="bl-title" placeholder="পোস্টের শিরোনাম" class="w-full bg-darker border border-gray-600 rounded p-2 text-white" required><textarea id="bl-content" placeholder="বিস্তারিত কন্টেন্ট..." rows="4" class="w-full bg-darker border border-gray-600 rounded p-2 text-white" required></textarea><div class="flex gap-4"><select id="bl-type" class="bg-darker border border-gray-600 rounded p-2 text-white" onchange="app.toggleBlogMediaType()"><option value="image">ছবি</option><option value="video">ভিডিও (YouTube)</option></select><div id="bl-file-input" class="flex-1"><input type="file" class="text-gray-400 text-sm w-full" accept="image/*" onchange="app.handleImageUpload(this, 'bl-media-url')"></div><div id="bl-url-input" class="flex-1 hidden"><input type="text" id="bl-video-url" placeholder="YouTube Video URL" class="w-full bg-darker border border-gray-600 rounded p-2 text-white text-sm"></div></div><input type="hidden" id="bl-media-url"><button type="submit" class="bg-primary text-white py-2 px-6 rounded font-bold">পোস্ট করুন</button></form></div><h3 class="text-lg font-bold text-white mb-4">সকল পোস্ট</h3><div class="space-y-4">${snap.docs.map(d => { const p = d.data(); return `<div class="bg-darker p-4 rounded border border-gray-700 flex justify-between items-start"><div><h4 class="text-white font-bold">${p.title}</h4><p class="text-gray-400 text-xs mt-1">${p.createdAt ? new Date(p.createdAt.seconds * 1000).toLocaleDateString() : 'Now'}</p><span class="text-xs bg-gray-800 px-2 py-0.5 rounded text-primary mt-2 inline-block">${p.mediaType}</span></div><button onclick="app.deleteBlogPost('${d.id}')" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button></div>` }).join('')}</div>`; document.getElementById('admin-content').innerHTML = html; },
+            toggleBlogMediaType: () => { const type = document.getElementById('bl-type').value; if (type === 'video') { document.getElementById('bl-file-input').classList.add('hidden'); document.getElementById('bl-url-input').classList.remove('hidden'); } else { document.getElementById('bl-file-input').classList.remove('hidden'); document.getElementById('bl-url-input').classList.add('hidden'); } },
+            addBlogPost: async (e) => { e.preventDefault(); const type = document.getElementById('bl-type').value; let mediaUrl = document.getElementById('bl-media-url').value; if (type === 'video') { mediaUrl = document.getElementById('bl-video-url').value; if (!mediaUrl) return app.showToast('ভিডিও লিংক দিন', 'error'); } else { if (!mediaUrl) return app.showToast('ছবি আপলোড করুন', 'error'); } const data = { title: document.getElementById('bl-title').value, content: document.getElementById('bl-content').value, mediaType: type, mediaUrl: mediaUrl, createdAt: serverTimestamp() }; try { await addDoc(collection(db, "posts"), data); app.showToast('পোস্ট পাবলিশ হয়েছে!'); app.renderAdminBlog(); } catch (e) { app.showToast('Error', 'error'); } },
+            deleteBlogPost: async (id) => { if(!confirm('মুছে ফেলতে চান?')) return; try { await deleteDoc(doc(db, "posts", id)); app.showToast('পোস্ট ডিলিট হয়েছে'); app.renderAdminBlog(); } catch(e) { app.showToast('Error', 'error'); } },
+
+            // --- ADMIN PAGE MANAGER (Updated) ---
+            renderAdminPages: async () => {
+                const html = `
+                    <div class="mb-8 bg-gray-900 p-6 rounded border border-gray-700">
+                        <h3 class="text-lg font-bold text-white mb-4">নতুন পেজ তৈরি করুন / এডিট করুন</h3>
+                        <div class="space-y-4">
+                            <input type="text" id="page-slug-input" placeholder="Page Slug (e.g., return-policy, about)" class="w-full bg-darker border border-gray-600 rounded p-2 text-white font-mono text-sm">
+                            <input type="text" id="page-title-input" placeholder="Page Title (e.g., Return Policy)" class="w-full bg-darker border border-gray-600 rounded p-2 text-white font-bold">
+                            <textarea id="page-content-input" placeholder="Page Content..." rows="10" class="w-full bg-darker border border-gray-600 rounded p-2 text-white"></textarea>
+                            <button onclick="app.savePageContent()" class="bg-primary text-white py-2 px-6 rounded font-bold hover:bg-sky-600">সেভ করুন</button>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-lg font-bold text-white mb-4">সকল পেজ</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        ${state.pages.map(p => `
+                            <div class="bg-darker p-4 rounded border border-gray-700 flex justify-between items-center">
+                                <div>
+                                    <h4 class="text-white font-bold">${p.title}</h4>
+                                    <p class="text-gray-500 text-xs font-mono">${p.id}</p>
+                                </div>
+                                <button onclick="app.editPage('${p.id}')" class="text-yellow-500 hover:text-yellow-400 px-3 py-1 border border-yellow-500 rounded text-xs">Edit</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                document.getElementById('admin-content').innerHTML = html;
+            },
+            editPage: (id) => {
+                const page = state.pages.find(p => p.id === id);
+                if(!page) return;
+                document.getElementById('page-slug-input').value = page.id;
+                document.getElementById('page-slug-input').disabled = true; // Cannot change slug of existing
+                document.getElementById('page-title-input').value = page.title;
+                document.getElementById('page-content-input').value = page.content;
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            },
+            savePageContent: async () => {
+                const slug = document.getElementById('page-slug-input').value.trim();
+                const title = document.getElementById('page-title-input').value;
+                const content = document.getElementById('page-content-input').value;
+                if(!slug || !title) return app.showToast("Slug & Title required", "error");
+                try {
+                    await setDoc(doc(db, "pages", slug), { title, content, updatedAt: serverTimestamp() });
+                    app.showToast("পেজ আপডেট হয়েছে!");
+                    app.fetchData(); // Refresh list
+                    app.renderAdminPages();
+                } catch (e) { app.showToast("Error saving", "error"); }
+            },
+            handleImageUpload: (input, targetId) => { const file = input.files[0]; if (!file) return; const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = (event) => { const img = new Image(); img.src = event.target.result; img.onload = () => { const canvas = document.createElement('canvas'); const MAX_WIDTH = 600; const scaleSize = MAX_WIDTH / img.width; canvas.width = MAX_WIDTH; canvas.height = img.height * scaleSize; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height); document.getElementById(targetId).value = canvas.toDataURL('image/jpeg', 0.7); app.showToast('ইমেজ রেডি!'); } } }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            state.currentUser = user;
+            const authBtns = document.getElementById('auth-buttons'); const profile = document.getElementById('user-profile');
+            const navDash = document.getElementById('nav-dashboard-btn'); const mobDash = document.getElementById('mob-dashboard-btn');
+            const navAdmin = document.getElementById('nav-admin-btn'); const mobAdmin = document.getElementById('mob-admin-btn');
+            if (user) {
+                authBtns.classList.add('hidden'); profile.classList.remove('hidden'); document.getElementById('user-name').innerText = user.email.split('@')[0];
+                navDash.classList.remove('hidden'); mobDash.classList.remove('hidden');
+                if (user.email === state.adminEmail) { state.isAdmin = true; navAdmin.classList.remove('hidden'); mobAdmin.classList.remove('hidden'); } else { state.isAdmin = false; navAdmin.classList.add('hidden'); mobAdmin.classList.add('hidden'); }
+            } else { authBtns.classList.remove('hidden'); profile.classList.add('hidden'); navDash.classList.add('hidden'); mobDash.classList.add('hidden'); navAdmin.classList.add('hidden'); mobAdmin.classList.add('hidden'); state.isAdmin = false; }
+        });
+
+        app.updateCartCount();
+        app.fetchData();
+    </script>
+</body>
+</html>
