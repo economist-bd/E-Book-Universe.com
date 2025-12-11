@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>স্বাস্থ্য ও সুস্থতা (Health & Wellness) - E-Book Universe</title>
+    <style>
+        /* General Body & Font Styles - Enhanced for readability */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.7; /* Increased line height for better spacing */
+            font-size: 16px; /* Base font size slightly increased */
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Header & Navbar - Reusing existing styles */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 10px 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1D5B79;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1D5B79;
+        }
+        
+        /* Main Content: Health & Wellness */
+        .health-content {
+            margin-top: 40px;
+            background: #fff;
+            border-radius: 12px; /* Slightly more rounded corners */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Stronger shadow */
+            padding: 40px;
+            position: relative;
+            z-index: 1; 
+        }
+
+        .health-content h1 {
+            font-size: 3em; /* Larger main title */
+            font-weight: 800;
+            color: #1D5B79;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* Subtle text shadow */
+        }
+        
+        .health-content h2 {
+            font-size: 2.2em; /* Larger section title */
+            font-weight: 700;
+            color: #192a3d;
+            margin-top: 40px;
+            border-left: 5px solid #00a87f; /* Green line highlight */
+            padding-left: 15px;
+            padding-bottom: 5px;
+        }
+        
+        .health-content h3 {
+            font-size: 1.6em; /* Noticeably larger subtitle */
+            color: #2c73d2;
+            margin-top: 25px;
+            text-decoration: underline; /* Underline for emphasis */
+            text-decoration-color: #a8d5e5;
+            padding-bottom: 5px;
+        }
+
+        .health-content p {
+            font-size: 1.15em; /* Paragraph font size increased */
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        /* Enhanced List Styles */
+        .health-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .health-content ul li {
+            margin-bottom: 12px;
+            padding: 10px 15px; /* Added padding to list items */
+            position: relative;
+            font-size: 1.1em;
+            background-color: #f9f9f9; /* Light background for items */
+            border-radius: 6px;
+            border-left: 4px solid #00a87f; /* Green left border for emphasis */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Soft shadow */
+            transition: transform 0.2s ease-in-out, background-color 0.2s;
+        }
+
+        .health-content ul li:hover {
+            background-color: #e6fffa; /* Light green background on hover */
+            transform: translateX(5px); /* Slight movement on hover */
+        }
+
+        .health-content ul li::before {
+            content: "✨"; /* Replaced checkmark with sparkle emoji */
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5em;
+            margin-left: -1.5em;
+            position: absolute;
+            left: 5px;
+            top: 10px;
+        }
+
+        /* Emergency/Life Support Section */
+        .emergency-box {
+            background-color: #ffeded;
+            border: 3px dashed #ff4d4d; /* Dotted border for urgency */
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.4); /* Red glow effect */
+        }
+        
+        .emergency-box h2 {
+            color: #ff4d4d;
+            margin-top: 0;
+            border-left: none;
+            font-size: 2.5em;
+        }
+
+        .emergency-box p {
+            font-weight: bold;
+            color: #c90000;
+            font-size: 1.3em; /* Larger text for important info */
+            margin-bottom: 15px;
+        }
+
+        .emergency-box a {
+            display: inline-block;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px; /* Pill shape button */
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        
+        .emergency-box a:hover {
+            background-color: #e60000;
+            transform: translateY(-2px); /* Lift button on hover */
+        }
+
+        /* --- NEW ANIMATION STYLES (Unchanged) --- */
+        
+        /* 1. Keyframe for the Floating/Jumping Icon */
+        @keyframes jumpAndFloat {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            25% {
+                transform: translate(150px, -20px) scale(1.05) rotate(5deg);
+            }
+            50% {
+                transform: translate(300px, 0) scale(1) rotate(0deg);
+            }
+            75% {
+                transform: translate(150px, 20px) scale(1.05) rotate(-5deg);
+            }
+            100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+        }
+        
+        /* 2. Keyframe for the Chasing Child's breathing/idle motion */
+        @keyframes chasing {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* 3. Styling the Floating Icon */
+        .floating-icon {
+            position: fixed;
+            top: 200px;
+            left: 50px;
+            width: 80px; 
+            height: 80px;
+            object-fit: contain;
+            z-index: 100;
+            animation: jumpAndFloat 10s ease-in-out infinite alternate;
+        }
+        
+        /* 4. Styling the Chasing Child */
+        .chasing-child {
+            position: fixed;
+            top: 250px;
+            left: 10px;
+            width: 100px; 
+            height: 100px;
+            object-fit: contain;
+            z-index: 99;
+            animation: chasing 2s ease-in-out infinite alternate;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none;
+            }
+            .navbar {
+                justify-content: center;
+            }
+            .health-content {
+                padding: 20px;
+            }
+            .health-content h1 {
+                font-size: 2em;
+            }
+            /* Hide floating elements on small screens for better readability */
+            .floating-icon, .chasing-child {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo">E-Book Universe</a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories</a>
+                    <!-- NOTE: You can add dropdown content here if needed -->
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Sign In</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content: Health & Wellness -->
+    <main>
+        <div class="container">
+            <!-- ভাসমান আইকন (Floating Icon - লাফাতে থাকবে) -->
+            <!-- আপনি এখানে আপনার Google Drive এর কাজ করা Direct Embed Link ব্যবহার করতে পারেন -->
+            <img id="floatingIcon" class="floating-icon" 
+                 src="https://i.ibb.co.com/yB5g6rb8/meril-petroleum-jelly-100-ml.jpg" 
+                 alt="Floating Medicine Icon">
+            
+            <!-- তাড়া করা বাচ্ছা (Chasing Child - স্ক্রল এর সাথে লাফাতে থাকবে) -->
+            <!-- আপনি এখানে আপনার বাচ্চার ছবির লিঙ্ক ব্যবহার করতে পারেন -->
+            <img id="chasingChild" class="chasing-child" 
+                 src="https://i.ibb.co.com/JWyCq1kX/favpng-b0e5991e68813a77929e6cffa8728a59.png" 
+                 alt="Chasing Child Icon">
+
+            
+            <div class="health-content">
+                <h1>স্বাস্থ্য ও সুস্থতা (Health & Wellness)</h1>
+                <p style="text-align: center; font-style: italic; color: #555;">একটি সুস্থ জীবন মানে শরীর, মন ও আত্মার ভারসাম্য।</p>
+                
+                <!-- লাইফ সাপোর্ট/জরুরী তথ্য বক্স -->
+                <div class="emergency-box">
+                    <h2>🚨 জরুরী লাইফ সাপোর্ট তথ্য 🚨</h2>
+                    <p>যদি কোনো ব্যক্তি গুরুতর অসুস্থ হন বা জরুরি সাহায্যের প্রয়োজন হয়, তবে অবিলম্বে স্থানীয় জরুরি পরিষেবাগুলিতে যোগাযোগ করুন।</p>
+                    <p>বাংলাদেশের জরুরি নম্বর:</p>
+                    <p>জাতীয় হেল্পলাইন: **৯৯৯** (পুলিশ, ফায়ার সার্ভিস, অ্যাম্বুলেন্স)</p>
+                    <a href="tel:999">৯৯৯-এ কল করুন</a>
+                </div>
+
+                <!-- শারীরিক সুস্থতা -->
+                <h2>১. শারীরিক সুস্থতা (Physical Health)</h2>
+                <p>সুস্থ থাকার জন্য নিয়মিত শারীরিক ক্রিয়াকলাপ এবং সঠিক খাদ্যভ্যাস অপরিহার্য। এটি রোগ প্রতিরোধের পাশাপাশি আপনার কর্মক্ষমতা বৃদ্ধি করে।</p>
+                
+                <h3>সঠিক খাদ্যভ্যাস:</h3>
+                <ul>
+                    <li>পর্যাপ্ত পরিমাণে ফল ও শাকসবজি খান, যা ভিটামিন ও মিনারেলে ভরপুর।</li>
+                    <li>প্রক্রিয়াজাত খাবার (Processed Foods) এবং অতিরিক্ত চিনিযুক্ত পানীয় এড়িয়ে চলুন।</li>
+                    <li>নিয়মিতভাবে পর্যাপ্ত জল পান করুন (দৈনিক কমপক্ষে ৮ গ্লাস)।</li>
+                    <li>কম চর্বিযুক্ত প্রোটিন (যেমন মাছ, মুরগি, ডাল) এবং স্বাস্থ্যকর চর্বি (যেমন বাদাম, বীজ) গ্রহণ করুন।</li>
+                </ul>
+                
+                <h3>নিয়মিত ব্যায়াম:</h3>
+                <ul>
+                    <li>প্রতিদিন কমপক্ষে ৩০ মিনিট মাঝারি ধরনের ব্যায়াম করুন (যেমন দ্রুত হাঁটা, দৌড়ানো, সাইক্লিং)।</li>
+                    <li>সপ্তাহে ২-৩ দিন শক্তি প্রশিক্ষণ (Strength Training) এর অভ্যাস করুন।</li>
+                    <li>ব্যায়ামের আগে এবং পরে স্ট্রেচিং (Stretching) করতে ভুলবেন না।</li>
+                </ul>
+
+                <!-- মানসিক সুস্থতা -->
+                <h2>২. মানসিক সুস্থতা (Mental Wellness)</h2>
+                <p>মানসিক স্বাস্থ্যকে অবহেলা করা উচিত নয়। এটি আপনার জীবনের মান এবং আপনার শারীরিক স্বাস্থ্যের উপর সরাসরি প্রভাব ফেলে।</p>
+
+                <h3>মানসিক চাপ কমানোর উপায়:</h3>
+                <ul>
+                    <li>নিয়মিত ধ্যান (Meditation) বা যোগা অনুশীলন করুন।</li>
+                    <li>প্রতিদিন কিছু সময়ের জন্য প্রকৃতির কাছাকাছি থাকুন।</li>
+                    <li>যে কাজগুলো আপনার ভালো লাগে, সেগুলোতে সময় দিন (হবি)।</li>
+                    <li>নিজের অনুভূতিগুলো লিখে রাখার অভ্যাস করুন।</li>
+                </ul>
+
+                <h3>সামাজিক সংযোগ:</h3>
+                <ul>
+                    <li>বন্ধু এবং পরিবারের সাথে নিয়মিত যোগাযোগ বজায় রাখুন।</li>
+                    <li>সমস্যা হলে বিশ্বস্ত কারও সাথে মন খুলে কথা বলুন।</li>
+                    <li>প্রয়োজনে মানসিক স্বাস্থ্য বিশেষজ্ঞের পরামর্শ নিন।</li>
+                </ul>
+                
+                <!-- ঘুম ও বিশ্রাম -->
+                <h2>৩. ঘুম ও বিশ্রাম (Sleep and Rest)</h2>
+                <p>ঘুম কেবল আরাম নয়, এটি শরীরকে মেরামত করার এবং মনকে বিশ্রাম দেওয়ার একটি গুরুত্বপূর্ণ প্রক্রিয়া।</p>
+                
+                <h3>ভালো ঘুমের টিপস:</h3>
+                <ul>
+                    <li>প্রতিদিন একই সময়ে ঘুমাতে যান এবং ঘুম থেকে উঠুন।</li>
+                    <li>শোবার ঘরকে ঠান্ডা, অন্ধকার এবং শান্ত রাখুন।</li>
+                    <li>ঘুমাতে যাওয়ার আগে কফি বা ক্যাফেইন জাতীয় পানীয় পান করা থেকে বিরত থাকুন।</li>
+                    <li>শোবার আগে মোবাইল বা স্ক্রিন দেখা এড়িয়ে চলুন।</li>
+                </ul>
+
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer Section (Reusing structure from AboutUs.html) -->
+    <footer>
+        <div class="container">
+            <p>Copyright © 2025 E-Book Universe. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for Scroll-Based Chasing Effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const floatingIcon = document.getElementById('floatingIcon');
+            const chasingChild = document.getElementById('chasingChild');
+
+            // Store initial Y offset for the chaser relative to the icon
+            const initialIconTop = floatingIcon.offsetTop;
+            const initialChildTop = chasingChild.offsetTop;
+            // yOffsetDifference calculation is not needed here as we calculate newChildTop based on initialChildTop directly
+            
+            // This function runs every time the user scrolls
+            window.onscroll = function() {
+                // Get the current scroll position of the page
+                const scrollY = window.scrollY || window.pageYOffset;
+
+                // Adjust the vertical position of the chaser relative to the scroll.
+                // Multiplying by a factor (e.g., 0.5) makes it move slower than the scroll, 
+                // giving the illusion of chasing.
+                const chaseSpeed = 0.5; // Controls how quickly the child 'follows' the scroll
+                
+                // New top position for the child element. Using the initial top position 
+                // and adding a fraction of the scroll distance.
+                const newChildTop = initialChildTop + (scrollY * chaseSpeed);
+
+                // Apply the new position. We use 'px' units.
+                chasingChild.style.top = newChildTop + 'px';
+            };
+        });
+    </script>
+
+</body>
+</html>
