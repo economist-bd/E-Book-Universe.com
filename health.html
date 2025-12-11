@@ -19,6 +19,7 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
+            position: relative; /* Animation container needs relative position */
         }
 
         /* Header & Navbar - Reusing existing styles */
@@ -72,6 +73,8 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             padding: 40px;
+            position: relative; /* To contain the absolute positioned floating image */
+            z-index: 1; /* Ensure content is below floating element's z-index */
         }
 
         .health-content h1 {
@@ -164,6 +167,47 @@
             background-color: #e60000;
         }
 
+        /* --- NEW ANIMATION STYLES --- */
+        
+        /* 1. Keyframe defining the floating motion */
+        @keyframes float {
+            0% {
+                transform: translate(0%, 0%) rotate(0deg); /* Start: Top left */
+                opacity: 0.8;
+            }
+            25% {
+                transform: translate(100%, 20%) rotate(5deg);
+                opacity: 0.9;
+            }
+            50% {
+                transform: translate(0%, 40%) rotate(10deg); /* Middle: Mid-right */
+                opacity: 1;
+            }
+            75% {
+                transform: translate(100%, 60%) rotate(5deg);
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(0%, 80%) rotate(0deg); /* End: Bottom left */
+                opacity: 0.8;
+            }
+        }
+
+        /* 2. Styling the floating image */
+        .floating-image {
+            position: absolute; /* Allows it to float over other content */
+            top: 50px;
+            left: 0;
+            width: 80px; /* Small size for floating effect */
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 10; /* Ensures it is ABOVE the health-content box */
+            opacity: 0.8;
+            /* Apply the animation */
+            animation: float 15s ease-in-out infinite alternate; /* 15s duration, infinite loop, alternates direction */
+        }
+        
         /* Responsive Styles */
         @media (max-width: 600px) {
             .nav-links {
@@ -177,6 +221,10 @@
             }
             .health-content h1 {
                 font-size: 2em;
+            }
+            /* Hide floating image on small screens for better readability */
+            .floating-image {
+                display: none;
             }
         }
     </style>
@@ -203,6 +251,12 @@
     <!-- Main Content: Health & Wellness -->
     <main>
         <div class="container">
+            <!-- ভাসমান ছবির উপাদান (Floating Image Element) -->
+            <!-- NOTE: এখানে আপনার Google Drive এর কাজ করা লিঙ্কটি (Direct Embed Link) প্রতিস্থাপন করুন -->
+            <img class="floating-image" 
+                 src="1.jpg" 
+                 alt="Health Icon Floating">
+            
             <div class="health-content">
                 <h1>স্বাস্থ্য ও সুস্থতা (Health & Wellness)</h1>
                 <p style="text-align: center; font-style: italic; color: #555;">একটি সুস্থ জীবন মানে শরীর, মন ও আত্মার ভারসাম্য।</p>
